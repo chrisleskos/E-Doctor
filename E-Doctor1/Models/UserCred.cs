@@ -7,8 +7,8 @@ namespace E_Doctor1.Models
 {
     public class UserCred
     {
-        String Username { get; set; }
-        String Password { get; set; }
+        public String Username { get; set; }
+        public String Password { get; set; }
 
         public UserCred(String username, String password)
         {
