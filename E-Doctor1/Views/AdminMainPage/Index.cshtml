@@ -1,0 +1,19 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h2>Index</h2>
+
+    <div>
+        <h1>Kεντρικό Μενού Διαχειριστή.</h1>
+        <p>Παρακαλώ επιλέξτε μία από της παρακάτω ενέργειες για να συνεχίσετε.</p><br />
+
+        <button onclick="window.location = '@Url.Action("Login","Home")'">Προσθήκη Ιατρου</button><br />
+        <button onclick="window.location = '@Url.Action("PatientRegister","Index")'">Προσθήκη Ασθενή</button><br />
+    </div>
+
+}
