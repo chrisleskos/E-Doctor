@@ -19,10 +19,14 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
         public AccountDAO()
         {
             this.connection = DatabaseUtil.getConnection("appointments_management");
+        }
+
+        public void openConn()
+        {
             connection.Open();
         }
 
-        ~AccountDAO()
+        public void closeConn()
         {
             connection.Close();
         }
@@ -52,108 +56,81 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
             return statement.ExecuteReader();
         }
 
-        private void createUser(String password, String salt)
+        public void createAdmin(Admin admin)
         {
-            String query = "INSERT INTO user_auth (user_password, salt) VALUES(@password, @salt) ";
+
+            String query = "WITH user_insert AS (" +
+                "   INSERT INTO user_auth (user_password, salt) " +
+                "   VALUES(@password, @salt) " +
+                "   INSERT INTO administrators (id, username, first_name, last_name, email) " +
+                "   VALUES ((SELECT user_id FROM user_insert), @username, @first_name, @last_name, @email)";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
 
-            statement.Parameters.AddWithValue("password", password);
-            statement.Parameters.AddWithValue("salt", salt);
+            statement.Parameters.AddWithValue("password", admin.getPassword());
+            statement.Parameters.AddWithValue("salt", admin.getSalt());
+            statement.Parameters.AddWithValue("username", admin.getUsername());
+            statement.Parameters.AddWithValue("first_name", admin.getFirstname());
+            statement.Parameters.AddWithValue("last_name", admin.getLastname());
+            statement.Parameters.AddWithValue("email", admin.getEmail());
 
-            statement.ExecuteReader();
-        }
+            statement.ExecuteNonQuery();
 
-        private void deleteFalseGeneratedUser(Exception exc)
-        {
-
-            String query = "DELETE FROM user_auth WHERE user_id = (SELECT currval(pg_get_serial_sequence('user_auth','user_id')))";
-
-            try {
-                NpgsqlCommand statement = new NpgsqlCommand(query, connection);
-                statement.ExecuteReader();
-                Console.WriteLine("Deleted user");
-                throw exc;
-            } catch (Exception e) {
-                Console.WriteLine(e.Message);
-            }
-
-        }
-
-        public void createAdmin(Admin admin)
-        {
-            createUser(admin.getPassword(), admin.getSalt());
-
-            String query = "INSERT INTO administrators (id, username, first_name, last_name, email) " +
-                    "VALUES ((SELECT currval(pg_get_serial_sequence('user_auth','user_id'))), @username, @first_name, @last_name, @email)";
-            try
-            {
-                NpgsqlCommand statement = new NpgsqlCommand(query, connection);
-
-                statement.Parameters.AddWithValue("username", admin.getUsername());
-                statement.Parameters.AddWithValue("first_name", admin.getFirstname());
-                statement.Parameters.AddWithValue("last_name", admin.getLastname());
-                statement.Parameters.AddWithValue("email", admin.getEmail());
-
-                statement.ExecuteReader();
-            }
-            catch (Exception e)
-            {
-                deleteFalseGeneratedUser(e);
-            }
         }
 
         public void createDoctor(Doctor doctor)
         {
-            createUser(doctor.getPassword(), doctor.getSalt());
 
-            String query = "INSERT INTO doctors (id, username, first_name, last_name, email, phone_number, amka, specialty) " +
-                    "VALUES ((SELECT currval(pg_get_serial_sequence('user_auth','user_id'))), @username, @first_name, @last_name, @email, @phone_number, @amka, @specialty)";
+            String query = "WITH user_insert AS (" +
+                "   INSERT INTO user_auth (user_password, salt) " +
+                "   VALUES(@password, @salt) " +
+                "   RETURNING user_id)" +
+                "   INSERT INTO doctors (id, username, first_name, last_name, email, phone_number, amka, specialty) " +
+                "   VALUES ((SELECT user_id FROM user_insert), @username, @first_name, @last_name, @email, @phone_number, @amka, @specialty)";
 
-            try
-            {
-                NpgsqlCommand statement = new NpgsqlCommand(query, connection);
 
-                statement.Parameters.AddWithValue("username", doctor.getUsername());
-                statement.Parameters.AddWithValue("first_name", doctor.getFirstname());
-                statement.Parameters.AddWithValue("last_name", doctor.getLastname());
-                statement.Parameters.AddWithValue("email", doctor.getEmail());
-                statement.Parameters.AddWithValue("phone_number", doctor.getPhone_number());
-                statement.Parameters.AddWithValue("amka", doctor.getAmka());
-                statement.Parameters.AddWithValue("specialty", doctor.getSpecialty());
 
-                statement.ExecuteReader();
-            }
-            catch (Exception e)
-            {
-                deleteFalseGeneratedUser(e);
-            }
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+
+
+            statement.Parameters.AddWithValue("password", doctor.getPassword());
+            statement.Parameters.AddWithValue("salt", doctor.getSalt());
+            statement.Parameters.AddWithValue("username", doctor.getUsername());
+            statement.Parameters.AddWithValue("first_name", doctor.getFirstname());
+            statement.Parameters.AddWithValue("last_name", doctor.getLastname());
+            statement.Parameters.AddWithValue("email", doctor.getEmail());
+            statement.Parameters.AddWithValue("phone_number", doctor.getPhone_number());
+            statement.Parameters.AddWithValue("amka", doctor.getAmka());
+            statement.Parameters.AddWithValue("specialty", doctor.getSpecialty());
+
+            statement.ExecuteNonQuery();
+
         }
 
         public void createPatient(Patient patient)
         {
-            createUser(patient.getPassword(), patient.getSalt());
 
-            String query = "INSERT INTO patients (id, username, first_name, last_name, email, phone_number, amka) " +
-                    "VALUES ((SELECT currval(pg_get_serial_sequence('user_auth','user_id'))), @username, @first_name, @last_name, @email, @phone_number, @amka)";
+            String query = "WITH user_insert AS (" +
+                "   INSERT INTO user_auth (user_password, salt) " +
+                "   VALUES(@password, @salt) " +
+                "   RETURNING user_id)" +
+                "   INSERT INTO patients (id, username, first_name, last_name, email, phone_number, amka) " +
+                "   VALUES ((SELECT user_id FROM user_insert), @username, @first_name, @last_name, @email, @phone_number, @amka)";
 
-            try
-            {
-                NpgsqlCommand statement = new NpgsqlCommand(query, connection);
 
-                statement.Parameters.AddWithValue("username", patient.getUsername());
-                statement.Parameters.AddWithValue("first_name", patient.getFirstname());
-                statement.Parameters.AddWithValue("last_name", patient.getLastname());
-                statement.Parameters.AddWithValue("email", patient.getEmail());
-                statement.Parameters.AddWithValue("phone_number", patient.getPhone_number());
-                statement.Parameters.AddWithValue("amka", patient.getAmka());
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
 
-                statement.ExecuteReader();
-            }
-            catch (Exception e)
-            {
-                deleteFalseGeneratedUser(e);
-            }
+            statement.Parameters.AddWithValue("password", patient.getPassword());
+            statement.Parameters.AddWithValue("salt", patient.getSalt());
+            statement.Parameters.AddWithValue("username", patient.getUsername());
+            statement.Parameters.AddWithValue("first_name", patient.getFirstname());
+            statement.Parameters.AddWithValue("last_name", patient.getLastname());
+            statement.Parameters.AddWithValue("email", patient.getEmail());
+            statement.Parameters.AddWithValue("phone_number", patient.getPhone_number());
+            statement.Parameters.AddWithValue("amka", patient.getAmka());
+
+            statement.ExecuteNonQuery();
+
         }
 
         public void editUser(Admin admin)

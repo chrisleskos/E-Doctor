@@ -13,6 +13,8 @@ namespace ErgasiaMVC.Models
         public String email { get; set; }
         public String salt { get; set; }
 
+        public Admin() { }
+
         public Admin(int user_id, String username, String password, String salt, String first_name, String last_name, String email)
             : base (username, password)
         {

@@ -9,7 +9,7 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
     {
         void register(String username, String password, String first_name, String last_name, String email); // admin
         void register(String username, String password, String first_name, String last_name, String email, String phone_number, String amka, int specialty); // doctor
-        void register(String username, String password, String first_name, String last_name, String email, String phone_number, String amka); // patient
+        string register(String username, String password, String first_name, String last_name, String email, String phone_number, String amka); // patient
         Object login(String username, String password);
     }
 }

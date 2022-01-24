@@ -15,5 +15,8 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
         void editUser(Admin admin);
         void editUser(Patient patient);
         void editUser(Doctor doctor);
+
+        void closeConn();
+        void openConn();
     }
 }

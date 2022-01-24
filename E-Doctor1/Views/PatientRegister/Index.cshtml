@@ -1,7 +1,50 @@
-﻿
+﻿@model ErgasiaMVC.Models.Patient
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index Patient Register</h2>
+<h1>Δημιουργία Νέου Λογαριασμού</h1>
+
+@using (Html.BeginForm()) //Creates a POST Form
+{
+
+
+<div class="container">
+    <label for="uname"><b>Username</b></label> <br />
+    <div>@Html.TextBoxFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+    <label for="psw"><b>Κωδικός</b></label><br />
+
+    <div>@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+    <label for="rpsw"><b>Επαναλάβετε τον Κωδικό</b></label><br />
+
+    <div><input type="password" /></div>
+
+    <label for="fn"><b>Όνομα</b></label><br />
+
+    <div>@Html.TextBoxFor(model => model.first_name, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+    <label for="ln"><b>Επώνυμο</b></label><br />
+
+    <div>@Html.TextBoxFor(model => model.last_name, new { htmlAttributes = new { @class = "form-control" } });</div>
+
+    <label for="email"><b>Email</b></label><br />
+
+    <div>@Html.TextBoxFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+    <label for="pn"><b>Τηλέφωνο</b></label><br />
+
+    <div>@Html.TextBoxFor(model => model.phone_number, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+    <label for="amka"><b>ΑΜΚΑ</b></label><br />
+
+    <div>@Html.TextBoxFor(model => model.amka, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+
+    <button type="submit">Εγγραφή</button><br /><br />
+
+</div>
+}
+<button onclick="location.href='@Url.Action("Index", "Home")'">Σύνδεση</button>
 

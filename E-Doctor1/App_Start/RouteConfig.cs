@@ -13,6 +13,12 @@ namespace E_Doctor1
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+           /* routes.MapRoute(
+                name: "LoginRoute",
+                url: "home/login/{username}/{password}",
+                defaults: new { controller = "Home", action = "Login", id = UrlParameter.Optional }
+            );*/
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

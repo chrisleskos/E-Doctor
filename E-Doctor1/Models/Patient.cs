@@ -9,6 +9,8 @@ namespace ErgasiaMVC.Models
         public String phone_number { get; set; }
         public String amka { get; set; }
 
+
+        public Patient() { }
         public Patient(int user_id, String username, String password, String salt, String first_name, String last_name, String email, String amka, String phone_number) : base(user_id, username, password, salt, first_name, last_name, email)
         {
             this.phone_number = phone_number;

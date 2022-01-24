@@ -9,33 +9,35 @@ namespace ErgasiaMVC.Models.DataManagement.Utilities
 {
     public class PasswordUtil
     {
-        public static String generateHash(string data, byte[] salt)
+        public static String generateHash(string rawData)
         {
-            HashAlgorithm algo = new SHA256Managed();
-
-            byte[] plainText = Encoding.ASCII.GetBytes(data);
-
-            byte[] plainTextWithSaltBytes =
-              new byte[plainText.Length + salt.Length];
-
-            for (int i = 0; i < plainText.Length; i++)
+            // Create a SHA256   
+            using (SHA256 sha256Hash = SHA256.Create())
             {
-                plainTextWithSaltBytes[i] = plainText[i];
-            }
-            for (int i = 0; i < salt.Length; i++)
-            {
-                plainTextWithSaltBytes[plainText.Length + i] = salt[i];
-            }
+                // ComputeHash - returns byte array  
+                byte[] bytes = sha256Hash.ComputeHash(Encoding.UTF8.GetBytes(rawData));
 
-            return algo.ComputeHash(plainTextWithSaltBytes).ToString();
+                // Convert byte array to a string   
+                return ByteToString(bytes);
+            }
         }
 
         public static bool checkPasswords(String givenPassword, String storedPassword, String storedSalt)
         {
-            String givenHashedPassword = generateHash(givenPassword, Encoding.ASCII.GetBytes(storedSalt));
+            String givenHashedPassword = generateHash(givenPassword + storedSalt);
             return givenHashedPassword.Equals(storedPassword);
         }
 
+        public static string ByteToString(byte[] bytes)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < bytes.Length; i++)
+            {
+                builder.Append(bytes[i].ToString("x2"));
+            }
+
+            return builder.ToString();
+        }
 
         public static byte[] generateSalt()
         {

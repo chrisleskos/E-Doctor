@@ -14,19 +14,22 @@ namespace E_Doctor1.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(new UserCred());
         }
 
-       /* [HttpPost]*/
-        [ValidateAntiForgeryToken]
-        public ActionResult Login(string username, string password)
+
+        [HttpPost]
+        public ActionResult Index(UserCred userCred)
         {
+
             AccountManagement accountManagement = new AccountManagement();
+
             try
             {
                 if (ModelState.IsValid)
                 {
-                    object user = accountManagement.login(username, password);
+                    object user = accountManagement.login(userCred.Username, userCred.Password);
+
                     if (user.GetType() == typeof(Admin))
                     {
                         return RedirectToAction("Index", "AdminMainPage");
@@ -45,21 +48,16 @@ namespace E_Doctor1.Controllers
             }
             catch (UserNotFoundException e)
             {
-                Console.WriteLine(e.Message);
-                ModelState.AddModelError("", "Invalid Credentials");
-
-
+                return RedirectToAction("Index", "Home");
             }
             catch (WrongPasswordException e)
             {
-                Console.WriteLine(e.Message);
-                ModelState.AddModelError("", "Invalid Credentials");
-
-
+                return RedirectToAction("Index", "Home");
             }
-            return View();
-        }
 
+            return RedirectToAction("Index", "Home");
+        }
+        
 
 
         public ActionResult About()
