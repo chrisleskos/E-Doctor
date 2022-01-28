@@ -57,7 +57,29 @@ namespace E_Doctor1.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-        
+
+
+        public ActionResult Register()
+        {
+            return View(new Patient());
+        }
+
+        [HttpPost]
+        public ActionResult Register(Patient patient)
+        {
+            AccountManagement accountManagement = new AccountManagement();
+            try
+            {
+
+                accountManagement.register(patient.Username, patient.Password, patient.first_name, patient.last_name, patient.email, patient.phone_number, patient.amka);
+            }
+            catch (UsernameAlreadyTaken e)
+            {
+                return Content(e.Message);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
 
 
         public ActionResult About()

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using ErgasiaMVC.Models;
+using ErgasiaMVC.Models.DataManagement.Exceptions;
+using ErgasiaMVC.Models.DataManagement.Managers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,8 +21,51 @@ namespace E_Doctor1.Controllers
 
         public ActionResult PatientRegister()
         {
-            return RedirectToAction("PatientRegister", "Index");
+            return View(new Patient());
 
+        }
+
+        [HttpPost]
+        public ActionResult PatientRegister(Patient patient)
+        {
+            AccountManagement accountManagement = new AccountManagement();
+            try
+            {
+
+                accountManagement.register(patient.Username, patient.Password, patient.first_name, patient.last_name, patient.email, patient.phone_number, patient.amka);
+            }
+            catch (UsernameAlreadyTaken e)
+            {
+                return Content(e.Message);
+            }
+
+            return View();
+
+            
+        }
+
+
+        public ActionResult DoctorRegister()
+        {
+            return View(new Doctor());
+
+        }
+
+        [HttpPost]
+
+        public ActionResult DoctorRegister(Doctor doctor)
+        {
+            AccountManagement accountManagement = new AccountManagement();
+            try
+            {
+
+                accountManagement.register(doctor.Username, doctor.Password, doctor.first_name, doctor.last_name, doctor.email, doctor.phone_number, doctor.amka, doctor.specialty);
+            }
+            catch (UsernameAlreadyTaken e)
+            {
+                return Content(e.Message);
+            }
+            return View();
         }
 
     }

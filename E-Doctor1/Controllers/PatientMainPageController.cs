@@ -13,5 +13,26 @@ namespace E_Doctor1.Controllers
         {
             return View();
         }
+
+        public ActionResult SpecialtyChoice()
+        {
+            return View();
+        }
+
+        public ActionResult ViewAppointmentsPatient()
+        {
+            return View();
+        }
+
+
+        public ActionResult AvailableDates()
+        {
+            return View();
+        }
+
+        public ActionResult AvailableTime()
+        {
+            return View();
+        }
     }
 }

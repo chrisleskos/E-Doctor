@@ -5,4 +5,13 @@
 
 <h2>Patient page</h2>
 
-<!--Patient page-->
+<h2>Kεντρικό Μενού Ασθενή.</h2>
+<div class="text-center">
+    <h1 class="display-4">Καλώς ήρθατε στην σελίδα E-Doctor.</h1>
+    <p>Παρακαλώ επιλέξτε μια από τις παρακάτω ενέργειες για να συνεχίσετε.</p>
+
+
+    <button onclick="location.href='@Url.Action("SpecialtyChoice","PatientMainPage")'">Online Κράτηση Νέου Ραντεβού</button>
+    <button onclick="location.href='@Url.Action("ViewAppointmentsPatient","PatientMainPage")'">Προβολή Ραντεβού</button>
+
+</div>

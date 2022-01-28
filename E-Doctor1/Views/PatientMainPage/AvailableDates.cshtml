@@ -1,0 +1,55 @@
+﻿@model ErgasiaMVC.Models.AvailableDate
+@{
+    ViewBag.Title = "AvailableDates";
+}
+
+<style>
+    /* CSS for table and input (textbox) */
+    table, td, th {
+        border: 1px solid black;
+    }
+
+    table, tr {
+        border-collapse: collapse;
+    }
+
+    input[type=text] {
+        width: 100%;
+    }
+
+    th {
+        height: 50px;
+        text-align: center;
+    }
+</style>
+
+<h2>Διαθέσιμες Ημερομηνίες</h2>
+<table>
+    <thead>
+        <tr>
+            <th>
+                ΔΕΥΤΕΡΑ
+            </th>
+            <th>
+                ΤΡΙΤΗ
+            </th>
+            <th>
+                ΤΕΤΑΡΤΗ
+            </th>
+            <th>
+                ΠΕΜΠΤΗ
+            </th>
+            <th>
+                ΠΑΡΑΣΚΕΥΗ
+            </th>
+        </tr>
+    </thead>
+</table>
+
+<!-- Κουμπιά/action με ονομα γιατρου και ωρες διαθεσιμότητας
+    πχ 
+    Δευτερα 24/01/2022         ||  Τρίτη
+    ----------------------------------------------------
+    Γεωργιου 09:00-18:00       ||
+    Παπαδοπουλος 12:00-20:00   ||
+    -->
