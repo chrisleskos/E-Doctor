@@ -20,9 +20,9 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
             doctorAvailabilityDAO = new DoctorAvailabilityDAO();
         }
 
-        public void createAvailableDate(string day, string time, Doctor doctor)
+        public void createAvailableDate(DayOfWeek day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
         {
-            AvailableDate availableDate = new AvailableDate(day, time, doctor);
+            AvailableDate availableDate = new AvailableDate(day, starting_time, ending_time, doctor);
             doctorAvailabilityDAO.createAvailableDate(availableDate);
         }
 
@@ -31,7 +31,7 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
             throw new NotImplementedException();
         }
 
-        public void editAvailableDate(int available_date_id, string day, string time, Doctor doctor)
+        public void editAvailableDate(int available_date_id, DayOfWeek day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
         {
             throw new NotImplementedException();
         }

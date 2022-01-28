@@ -7,39 +7,47 @@ namespace ErgasiaMVC.Models
 {
     public class AvailableDate
     {
-        private int available_date_id;
-        private String day;
-        private String time;
-        private Doctor doctor;
+        private int Id { get; set; }
+        private DayOfWeek Day { get; set; }
+        private TimeSpan Starting_time { get; set; }
+        private TimeSpan Ending_time { get; set; }
+        private Doctor doctor { get; set; }
 
-        public AvailableDate(int available_date_id, String day, String time, Doctor doctor)
+        public AvailableDate(int available_date_id, DayOfWeek day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
         {
-            this.available_date_id = available_date_id;
-            this.day = day;
-            this.time = time;
+            this.Id = available_date_id;
+            this.Day = day;
+            this.Starting_time = starting_time;
+            this.Ending_time = ending_time;
             this.doctor = doctor;
         }
 
-        public AvailableDate(String day, String time, Doctor doctor)
+        public AvailableDate(DayOfWeek day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
         {
-            this.day = day;
-            this.time = time;
+            this.Day = day;
+            this.Starting_time = starting_time;
+            this.Ending_time = ending_time;
             this.doctor = doctor;
         }
 
-        public int getAvailable_date_id()
+        public int getId()
         {
-            return available_date_id;
+            return Id;
         }
 
-        public String getDay()
+        public DayOfWeek getDay()
         {
-            return day;
+            return Day;
         }
 
-        public String getTime()
+        public TimeSpan getStartingTime()
         {
-            return time;
+            return Starting_time;
+        }
+
+        public TimeSpan getEndingTime()
+        {
+            return Ending_time;
         }
 
         public Doctor getDoctor()

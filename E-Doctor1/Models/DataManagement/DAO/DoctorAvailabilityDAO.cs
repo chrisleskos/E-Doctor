@@ -14,17 +14,31 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
         public DoctorAvailabilityDAO()
         {
             connection = DatabaseUtil.getConnection("appointments_management");
+        }
+
+        public void openConn()
+        {
             connection.Open();
         }
 
-        ~DoctorAvailabilityDAO()
+        public void closeConn()
         {
             connection.Close();
         }
 
         public void createAvailableDate(AvailableDate available_date)
         {
-            String query = "INSERT INTO weekly_available_appointments() VALUES ()";
+            String query = "INSERT INTO weekly_available_appointments(day, starting_time, ending_time, doctor_id) " +
+                "VALUES (@day, @starting_time, @ending_time, @doctor_id)";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+
+            statement.Parameters.AddWithValue("day", available_date.getDay());
+            statement.Parameters.AddWithValue("starting_time", available_date.getStartingTime());
+            statement.Parameters.AddWithValue("ending_time", available_date.getEndingTime());
+            statement.Parameters.AddWithValue("doctor_id", available_date.getDoctor().getUser_id());
+
+            statement.ExecuteNonQuery();
         }
 
         public void deleteAvailableDate(int available_date_id)
@@ -34,22 +48,45 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
 
         public void editAvailableDate(AvailableDate available_date)
         {
-            throw new NotImplementedException();
+            string query = "UPDATE weekly_available_appointments SET day = @day, stating_time = @starting_time, ending_time = @ending_time" +
+                "   WHERE available_date_id = @available_date_id";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+
+            statement.Parameters.AddWithValue("day", available_date.getDay());
+            statement.Parameters.AddWithValue("starting_time", available_date.getStartingTime());
+            statement.Parameters.AddWithValue("ending_time", available_date.getEndingTime());
+
+            statement.ExecuteNonQuery();
         }
 
-        public AvailableDate getAvailableDate(int available_date_id)
+        public NpgsqlDataReader getAvailableDate(int available_date_id)
         {
-            throw new NotImplementedException();
+            string query = "SELECT * FROM weekly_available_appointments WHERE available_date_id = @available_date_id";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            statement.Parameters.AddWithValue("available_date_id", available_date_id);
+
+            return statement.ExecuteReader();
         }
 
-        public List<AvailableDate> getAvailableDates(int doctor_id)
+        public NpgsqlDataReader getAvailableDates(int doctor_id)
         {
-            throw new NotImplementedException();
+            string query = "SELECT * FROM weekly_available_appointments WHERE doctor_id = @doctor_id";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            statement.Parameters.AddWithValue("doctor_id", doctor_id);
+
+            return statement.ExecuteReader();
         }
 
-        public List<AvailableDate> getAvailableDates()
+        public NpgsqlDataReader getAvailableDates()
         {
-            throw new NotImplementedException();
+            string query = "SELECT * FROM weekly_available_appointments";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            
+            return statement.ExecuteReader();
         }
     }
 }
