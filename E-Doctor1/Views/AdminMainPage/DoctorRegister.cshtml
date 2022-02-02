@@ -45,8 +45,16 @@
 
     <label for="specialty"><b>Ιδιότητα</b></label><br />
 
-    <div>@Html.TextBoxFor(model => model.specialty, new { htmlAttributes = new { @class = "form-control" } })</div>
-
+    <!-- <div>@Html.TextBoxFor(model => model.specialty, new { htmlAttributes = new { @class = "form-control" } })</div>-->
+    <div>
+        @Html.DropDownListFor(model => model.specialty, new List<SelectListItem>
+            ()
+            {
+            new SelectListItem {Text="Pathologist",Value="1" },
+            new SelectListItem {Text="Ophthalmologist",Value="2" },
+            new SelectListItem {Text="Orthopedic",Value="3"},
+            }, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
 
     <button type="submit">Εγγραφή</button><br /><br />
 
