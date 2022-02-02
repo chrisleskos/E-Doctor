@@ -43,7 +43,13 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
 
         public void deleteAvailableDate(int available_date_id)
         {
-            throw new NotImplementedException();
+            string query = "DELETE FROM weekly_available_appointments WHERE available_date_id = @available_date_id";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+
+            statement.Parameters.AddWithValue("available_date_id", available_date_id);
+
+            statement.ExecuteNonQuery();
         }
 
         public void editAvailableDate(AvailableDate available_date)
@@ -62,7 +68,8 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
 
         public NpgsqlDataReader getAvailableDate(int available_date_id)
         {
-            string query = "SELECT * FROM weekly_available_appointments WHERE available_date_id = @available_date_id";
+            string query = "SELECT * FROM weekly_available_appointments INNER JOIN doctors ON id = doctor_id" +
+                " WHERE available_date_id = @available_date_id";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
             statement.Parameters.AddWithValue("available_date_id", available_date_id);

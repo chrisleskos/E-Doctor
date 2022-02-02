@@ -14,5 +14,7 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
         NpgsqlDataReader getAvailableDates(int doctor_id);
         NpgsqlDataReader getAvailableDates();
         void editAvailableDate(AvailableDate available_date);
+        void closeConn();
+        void openConn();
     }
 }

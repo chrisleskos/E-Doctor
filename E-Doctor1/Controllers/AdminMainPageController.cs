@@ -22,7 +22,6 @@ namespace E_Doctor1.Controllers
         public ActionResult PatientRegister()
         {
             return View(new Patient());
-
         }
 
         [HttpPost]
@@ -31,7 +30,6 @@ namespace E_Doctor1.Controllers
             AccountManagement accountManagement = new AccountManagement();
             try
             {
-
                 accountManagement.register(patient.Username, patient.Password, patient.first_name, patient.last_name, patient.email, patient.phone_number, patient.amka);
             }
             catch (UsernameAlreadyTaken e)
@@ -39,16 +37,23 @@ namespace E_Doctor1.Controllers
                 return Content(e.Message);
             }
 
-            return View();
-
+            return RedirectToAction("Index", "AdminMainPage");
             
         }
 
 
         public ActionResult DoctorRegister()
         {
-            return View(new Doctor());
 
+            List<SelectListItem> specialties = new List<SelectListItem>();
+
+            specialties.Add(new SelectListItem { Value = "1", Text = "Pathologist" });
+            specialties.Add(new SelectListItem { Value = "2", Text = "Ophthalmologist" });
+            specialties.Add(new SelectListItem { Value = "3", Text = "Orthopedic" });
+
+            ViewBag.specialties = specialties;
+
+            return View(new Doctor());
         }
 
         [HttpPost]

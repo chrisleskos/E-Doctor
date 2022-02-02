@@ -8,12 +8,12 @@ namespace ErgasiaMVC.Models
     public class AvailableDate
     {
         private int Id { get; set; }
-        private DayOfWeek Day { get; set; }
+        private int Day { get; set; }
         private TimeSpan Starting_time { get; set; }
         private TimeSpan Ending_time { get; set; }
         private Doctor doctor { get; set; }
 
-        public AvailableDate(int available_date_id, DayOfWeek day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
+        public AvailableDate(int available_date_id, int day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
         {
             this.Id = available_date_id;
             this.Day = day;
@@ -22,7 +22,7 @@ namespace ErgasiaMVC.Models
             this.doctor = doctor;
         }
 
-        public AvailableDate(DayOfWeek day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
+        public AvailableDate(int day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
         {
             this.Day = day;
             this.Starting_time = starting_time;
@@ -35,7 +35,7 @@ namespace ErgasiaMVC.Models
             return Id;
         }
 
-        public DayOfWeek getDay()
+        public int getDay()
         {
             return Day;
         }
