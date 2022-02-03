@@ -113,12 +113,7 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
         {
             if (usernameTaken(username))
             {
-                accountDao.closeConn();
                 throw new UsernameAlreadyTaken();
-            }
-            else
-            {
-                accountDao.closeConn();
             }
 
             byte[] salt = PasswordUtil.generateSalt();
@@ -177,17 +172,29 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
 
         private bool usernameTaken(String username)
         {
-            accountDao.openConn();
+            
             try
             {
+                accountDao.openConn();
                 NpgsqlDataReader dr1 = accountDao.getUser(username, AccountDAO.ADMINISTRATORS_TABLE);
-                NpgsqlDataReader dr2 = accountDao.getUser(username, AccountDAO.DOCTORS_TABLE);
-                NpgsqlDataReader dr3 = accountDao.getUser(username, AccountDAO.PATIENTS_TABLE);
+                bool firstResult = dr1.Read();
+                accountDao.closeConn();
 
-                return dr1.Read() || dr2.Read() || dr3.Read();
+                accountDao.openConn();
+                NpgsqlDataReader dr2 = accountDao.getUser(username, AccountDAO.DOCTORS_TABLE);
+                bool secondResult = dr2.Read();
+                accountDao.closeConn();
+
+                accountDao.openConn();
+                NpgsqlDataReader dr3 = accountDao.getUser(username, AccountDAO.PATIENTS_TABLE);
+                bool thirdResult = dr3.Read();
+                accountDao.closeConn();
+
+                return firstResult || secondResult || thirdResult;
             }
             catch (Exception e)
             {
+                accountDao.closeConn();
                 Console.WriteLine(e.Message);
             }
 
