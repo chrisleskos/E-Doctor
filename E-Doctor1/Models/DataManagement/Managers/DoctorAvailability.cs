@@ -1,4 +1,5 @@
-﻿using ErgasiaMVC.Models.DataManagement.DAO;
+﻿using E_Doctor1.Models.DataManagement.Factories;
+using ErgasiaMVC.Models.DataManagement.DAO;
 using Npgsql;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,13 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
 
         DoctorAvailabilityDaoInterface  doctorAvailabilityDAO;
 
-        DoctorAvailability()
+        public DoctorAvailability()
         {
             doctorAvailabilityDAO = new DoctorAvailabilityDAO();
         }
 
-        public void createAvailableDate(int day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
+        public void createAvailableDate(AvailableDate availableDate)
         {
-            AvailableDate availableDate = new AvailableDate(day, starting_time, ending_time, doctor);
             doctorAvailabilityDAO.openConn();
             doctorAvailabilityDAO.createAvailableDate(availableDate);
             doctorAvailabilityDAO.closeConn();
@@ -36,9 +36,8 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
             doctorAvailabilityDAO.closeConn();
         }
 
-        public void editAvailableDate(int available_date_id, int day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
+        public void editAvailableDate(AvailableDate availableDate)
         {
-            AvailableDate availableDate = new AvailableDate(available_date_id, day, starting_time, ending_time, doctor);
             doctorAvailabilityDAO.openConn();
             doctorAvailabilityDAO.editAvailableDate(availableDate);
             doctorAvailabilityDAO.closeConn();
@@ -62,7 +61,20 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
 
         public List<AvailableDate> getAvailableDates(int doctor_id)
         {
-            throw new NotImplementedException();
+            List<AvailableDate> dates = new List<AvailableDate>();
+
+            doctorAvailabilityDAO.openConn();
+            NpgsqlDataReader reader = doctorAvailabilityDAO.getAvailableDates(doctor_id);
+
+            while (reader.Read())
+            {
+                AvailableDate availableDate = AvailableDateFactory.buildAvailableDate(reader);
+                dates.Add(availableDate);
+            }
+
+            doctorAvailabilityDAO.closeConn();
+
+            return dates;
         }
 
         public List<AvailableDate> getAvailableDates()

@@ -29,19 +29,18 @@ namespace E_Doctor1.Controllers
                 if (ModelState.IsValid)
                 {
                     object user = accountManagement.login(userCred.Username, userCred.Password);
-
+                    
                     if (user.GetType() == typeof(Admin))
                     {
-                        return RedirectToAction("Index", "AdminMainPage");
-
+                        return RedirectToAction("Index", "AdminMainPage", user);
                     }
                     else if (user.GetType() == typeof(Patient))
                     {
-                        return RedirectToAction("Index", "PatientMainPage");
+                        return RedirectToAction("Index", "PatientMainPage", user);
                     }
                     else if (user.GetType() == typeof(Doctor))
                     {
-                        return RedirectToAction("Index", "DoctorMainPage" );
+                        return RedirectToAction("Index", "DoctorMainPage", user);
                     }
                 }
 

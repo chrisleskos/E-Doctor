@@ -28,7 +28,7 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
 
         public void createAvailableDate(AvailableDate available_date)
         {
-            String query = "INSERT INTO weekly_available_appointments(day, starting_time, ending_time, doctor_id) " +
+            String query = "INSERT INTO weekly_available_appointments(day_of_week, starting_time, ending_time, doctor_id) " +
                 "VALUES (@day, @starting_time, @ending_time, @doctor_id)";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
@@ -79,7 +79,7 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
 
         public NpgsqlDataReader getAvailableDates(int doctor_id)
         {
-            string query = "SELECT * FROM weekly_available_appointments WHERE doctor_id = @doctor_id";
+            string query = "SELECT * FROM weekly_available_appointments INNER JOIN doctors ON doctor_id = id WHERE doctor_id = @doctor_id";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
             statement.Parameters.AddWithValue("doctor_id", doctor_id);

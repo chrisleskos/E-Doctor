@@ -1,7 +1,54 @@
-﻿
+﻿@model List<ErgasiaMVC.Models.AvailableDate>
 @{
     ViewBag.Title = "AvailableDates";
 }
 
+<style>
+    td, th {
+        padding: 20px;
+        border: 2px solid black;
+    }
+
+    th{
+        background-color: lightgrey;
+    }
+</style>
+
 <h2>AvailableDates</h2>
+
+<h1>Τα Διαθέσιμα Ραντεβού σας</h1>
+
+<table>
+    <tr>
+        <th>Δευτέρα</th>
+        <th>Τρίτη</th>
+        <th>Τετάρτη</th>
+        <th>Πέμπτη</th>
+        <th>Παρασκευή</th>
+    </tr>
+    <tr>
+     @for (int i = 1; i < 6; i++)
+     {
+         bool found = false;
+         foreach (var el in Model)
+         {
+             if (el.getDay() == i)
+             {
+                 found = true;
+                 <td>@el.getStartingTime() - @el.getEndingTime() <br /> <input type="button" value="Επεξεργασία"/></td>
+             }
+         }
+
+        
+
+         if (!found)
+         {
+             <td><input type="button" value="Προσθήκη"/></td>
+         }
+     }
+
+    </tr>
+</table>
+
+
 

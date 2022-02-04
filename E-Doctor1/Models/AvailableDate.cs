@@ -7,11 +7,13 @@ namespace ErgasiaMVC.Models
 {
     public class AvailableDate
     {
-        private int Id { get; set; }
-        private int Day { get; set; }
-        private TimeSpan Starting_time { get; set; }
-        private TimeSpan Ending_time { get; set; }
-        private Doctor doctor { get; set; }
+        public int Id { get; set; }
+        public int Day { get; set; }
+        public TimeSpan Starting_time { get; set; }
+        public TimeSpan Ending_time { get; set; }
+        public Doctor doctor { get; set; }
+
+        public AvailableDate() { }
 
         public AvailableDate(int available_date_id, int day, TimeSpan starting_time, TimeSpan ending_time, Doctor doctor)
         {

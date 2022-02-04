@@ -12,9 +12,9 @@ namespace E_Doctor1.Controllers
     public class AdminMainPageController : Controller
     {
         // GET: AdminMainPage
-        public ActionResult Index()
+        public ActionResult Index(Admin admin)
         {
-            return View();
+            return View(admin);
         }
 
         //register
