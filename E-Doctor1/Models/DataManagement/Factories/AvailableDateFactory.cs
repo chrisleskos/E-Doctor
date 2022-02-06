@@ -28,6 +28,8 @@ namespace E_Doctor1.Models.DataManagement.Factories
 
             Doctor doctor = new Doctor(doctor_id, username, first_name, last_name, email, phone_number, amka, specialty);
 
+            //Doctor doctor = UserFactory.buildDoctor(reader);
+
             return new AvailableDate(available_date_id, day, starting_time, ending_time, doctor);
 
 

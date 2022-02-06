@@ -12,6 +12,8 @@ namespace E_Doctor1.Controllers
 {
     public class PatientMainPageController : Controller
     {
+        public object AppointmentManager { get; private set; }
+
         // GET: PatientMainPage
         public ActionResult Index(Patient patient)
         {
@@ -23,9 +25,14 @@ namespace E_Doctor1.Controllers
             return View(patient);
         }
 
-        public ActionResult ViewAppointmentsPatient()
+        public ActionResult ViewAppointmentsPatient(Patient patient)
         {
-            return View();
+            AppointmentManagement appointmentManagement = new AppointmentManagement();
+
+            List<Appointment> appointments = appointmentManagement.getAppointments(patient);
+            ListModel<Appointment> listModel = new ListModel<Appointment>(appointments, patient);
+
+            return View(listModel);
         }
 
         public ActionResult AvailableDates(int patient_id, int specialty)
@@ -83,6 +90,18 @@ namespace E_Doctor1.Controllers
             appointmentManagement.createAppointment(appointment);
 
             return RedirectToAction("Index", "PatientMainPage", patient);
+        }
+
+        [HttpPost]
+        public ActionResult CancelAppointment(int appointment_id)
+        {
+            AppointmentManagement appointmentManager = new AppointmentManagement();
+
+            Appointment appointment = appointmentManager.getAppointment(appointment_id);
+
+            appointmentManager.changeAppointmentStatus(appointment_id);
+
+            return RedirectToAction("ViewAppointmentsPatient", "PatientMainPage", appointment.patient);
         }
 
     }

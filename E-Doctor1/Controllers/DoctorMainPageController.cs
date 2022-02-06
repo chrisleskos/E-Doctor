@@ -78,9 +78,15 @@ namespace E_Doctor1.Controllers
             return View(listModel);
         }
 
-        public ActionResult ViewAppointmentsDoctor()
+        public ActionResult ViewAppointmentsDoctor(Doctor doctor)
         {
-            return View();
+
+            AppointmentManagement appointmentManagement = new AppointmentManagement();
+
+            List<Appointment> appointments = appointmentManagement.getAppointments(doctor);
+            ListModel<Appointment> listModel = new ListModel<Appointment>(appointments, doctor);
+
+            return View(listModel);
         }
     }
 }

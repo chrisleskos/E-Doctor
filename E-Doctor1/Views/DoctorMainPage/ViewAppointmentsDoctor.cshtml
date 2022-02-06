@@ -1,4 +1,6 @@
-﻿
+﻿@model  E_Doctor1.Models.ListModel<ErgasiaMVC.Models.Appointment>
+@using System.Globalization
+@using ErgasiaMVC.Models
 @{
     ViewBag.Title = "ViewAppointmentsDoctor";
 }
@@ -8,5 +10,44 @@
 </div>
 
 <h2>Προβολή επόμενων Ραντεβού σας</h2>
-<p> </p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Ασθενής</th>
+            <th scope="col">Ημ/νία</th>
+            <th scope="col">Ώρα Ραντεβού</th>
+            <th scope="col">Κατάσταση</th>
+        </tr>
+    </thead>
+    @foreach (var appointment in Model.Items)
+    {
+        <tr>
+            <td>
+                @appointment.patient.first_name @appointment.patient.last_name
+            </td>
+            <td>
+                @appointment.scheduled_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+            </td>
+            <td>
+                @appointment.scheduled_date.ToString(@"HH\:mm")
+            </td>
+            <td>
+                @if (appointment.status == Appointment.CANCELLED)
+                {
+                    <span>Ακυρώθηκε</span>
+                }
+                else
+                {
+                    using (Html.BeginForm("CancelAppointment", "PatientMainPage"))
+                    {
+                        <input type="hidden" name="appointment_id" value="@appointment.appointment_id" />
+                        <span> <button type="submit">Ακύρωση</button> (Αναμένεται) </span>
+                    }
+                }
+            </td>
+        </tr>
+    }
+</table>
+
 

@@ -49,22 +49,46 @@ namespace E_Doctor1.Models.DataManagement.DAO
 
         public NpgsqlDataReader getAppointment(int appointment_id)
         {
-            throw new NotImplementedException();
+            string query = "Select * FROM appointments as a INNER JOIN weekly_available_appointments as waa ON waa.available_appointment_id = a.available_appointment_id INNER JOIN doctors as d ON d.id = doctor_id INNER JOIN patients as p ON patient_id = p.id " +
+                " WHERE appointment_id = @id";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            statement.Parameters.AddWithValue("id", appointment_id);
+
+            return statement.ExecuteReader();
         }
 
         public NpgsqlDataReader getAppointments(Patient patient)
         {
-            throw new NotImplementedException();
+            string query = "SELECT * FROM appointments as a INNER JOIN weekly_available_appointments as waa ON waa.available_appointment_id = a.available_appointment_id INNER JOIN doctors as d ON d.id = doctor_id INNER JOIN patients as p ON patient_id = p.id" +
+                " WHERE patient_id = @patient_id";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            statement.Parameters.AddWithValue("patient_id", patient.user_id);
+
+            return statement.ExecuteReader();
         }
 
         public NpgsqlDataReader getAppointments(Doctor doctor)
         {
-            throw new NotImplementedException();
+            string query = "SELECT * FROM appointments as a INNER JOIN weekly_available_appointments as waa ON waa.available_appointment_id = a.available_appointment_id INNER JOIN patients as p ON patient_id = p.id INNER JOIN doctors as d ON d.id = doctor_id " +
+                " WHERE doctor_id = @doctor_id AND DATE(scheduled_date) >= CURRENT_DATE ";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            statement.Parameters.AddWithValue("doctor_id", doctor.user_id);
+
+            return statement.ExecuteReader();
         }
 
         public void changeStatus(int appointment_id)
         {
-            throw new NotImplementedException();
+            string query = "UPDATE appointments SET status = 1" +
+                 " WHERE appointment_id = @appointment_id";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            statement.Parameters.AddWithValue("appointment_id", appointment_id);
+
+            statement.ExecuteNonQuery();
         }
     }
 }

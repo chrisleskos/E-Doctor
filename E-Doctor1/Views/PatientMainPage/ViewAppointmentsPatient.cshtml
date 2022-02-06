@@ -1,5 +1,6 @@
-﻿@model  ErgasiaMVC.Models.Appointment
-
+﻿@model  E_Doctor1.Models.ListModel<ErgasiaMVC.Models.Appointment>
+@using System.Globalization
+@using ErgasiaMVC.Models
 @{
     ViewBag.Title = "ViewAppointmentsPatient";
 }
@@ -13,27 +14,44 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Username</th>
-            <th scope="col">Full Name</th>
-            <th scope="col">Amka</th>
-            <th scope="col">Email</th>
-            <th scope="col">Mobile</th>
-            <th scope="col">Date</th>
-            <th scope="col">Hours</th>
-            <th scope="col">Appointment Category</th>
+            <th scope="col">Ιατρός</th>
+            <th scope="col">Ειδικότητα</th>
+            <th scope="col">Ημ/νία</th>
+            <th scope="col">Ώρα Ραντεβού</th>
+            <th scope="col">Κατάσταση</th>
         </tr>
     </thead>
-    <!--<tbody> prepei na yparxoyn getters kai setters ston const allios ...
-        @foreach (var c in Model.) 
-        {
-            <tr>
-                <td>@c.appointment_id</td>
-                <td>@c.availableDate</td>
-                <td>@c.patient</td>
-                <td>@c.doctor</td>
-                <td>@c.status</td>  
-            </tr>
-        }
-    </tbody>-->
+    @foreach(var appointment in Model.Items)
+    {
+        <tr>
+            <td>
+                @appointment.availableDate.doctor.first_name @appointment.availableDate.doctor.last_name
+            </td>
+            <td>
+                @appointment.availableDate.doctor.getSpecialtyName()Σ
+            </td>
+            <td>
+                @appointment.scheduled_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)
+            </td>
+            <td>
+                @appointment.scheduled_date.ToString(@"HH\:mm")
+            </td>
+            <td>
+                @if(appointment.status == Appointment.CANCELLED)
+                {
+                    <span>Ακυρώθηκε</span>
+                } else if (DateTime.Compare(appointment.scheduled_date, DateTime.Now) < 0)
+                {
+                    <span>Ολοκληρώθηκε</span>
+                } else
+                {
+                        using (Html.BeginForm("CancelAppointment", "PatientMainPage")) {
+                            <input type="hidden" name="appointment_id" value="@appointment.appointment_id"/>
+                            <span> <button type="submit">Ακύρωση</button> (Αναμένεται) </span>
+                        }
+                }
+            </td>
+        </tr>
+    }
 </table>
 

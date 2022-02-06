@@ -1,4 +1,6 @@
 ﻿using E_Doctor1.Models.DataManagement.DAO;
+using E_Doctor1.Models.DataManagement.Factories;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,17 +34,53 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
 
         public Appointment getAppointment(int appointment_id)
         {
-            throw new NotImplementedException();
+            appointmentDao.openConn();
+            NpgsqlDataReader reader = appointmentDao.getAppointment(appointment_id);
+
+            if (reader.Read()) {
+                Appointment appointment = AppointmentFactory.buildAppointment(reader);
+                appointmentDao.closeConn();
+                return appointment;
+            }
+            
+            appointmentDao.closeConn();
+            return null;
         }
 
         public List<Appointment> getAppointments(Patient patient)
         {
-            throw new NotImplementedException();
+            List<Appointment> appointments = new List<Appointment>();
+
+            appointmentDao.openConn();
+            NpgsqlDataReader reader = appointmentDao.getAppointments(patient);
+
+            while (reader.Read())
+            {
+                Appointment appointment = AppointmentFactory.buildAppointment(reader);
+                appointments.Add(appointment);
+            }
+
+            appointmentDao.closeConn();
+
+            return appointments;
         }
 
         public List<Appointment> getAppointments(Doctor doctor)
         {
-            throw new NotImplementedException();
+            List<Appointment> appointments = new List<Appointment>();
+
+            appointmentDao.openConn();
+            NpgsqlDataReader reader = appointmentDao.getAppointments(doctor);
+
+            while (reader.Read())
+            {
+                Appointment appointment = AppointmentFactory.buildAppointment(reader);
+                appointments.Add(appointment);
+            }
+
+            appointmentDao.closeConn();
+
+            return appointments;
         }
     }
 }
