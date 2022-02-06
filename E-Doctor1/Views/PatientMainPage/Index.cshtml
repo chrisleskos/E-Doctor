@@ -1,9 +1,11 @@
-﻿
+﻿@model ErgasiaMVC.Models.Patient
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Patient page</h2>
+<div class="user-credentials">
+    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
+</div>
 
 <h2>Kεντρικό Μενού Ασθενή.</h2>
 <div class="text-center">
@@ -11,7 +13,7 @@
     <p>Παρακαλώ επιλέξτε μια από τις παρακάτω ενέργειες για να συνεχίσετε.</p>
 
 
-    <button onclick="location.href='@Url.Action("SpecialtyChoice","PatientMainPage")'">Online Κράτηση Νέου Ραντεβού</button>
-    <button onclick="location.href='@Url.Action("ViewAppointmentsPatient","PatientMainPage")'">Προβολή Ραντεβού</button>
+    <button onclick="location.href='@Url.Action("SpecialtyChoice","PatientMainPage", Model)'">Online Κράτηση Νέου Ραντεβού</button>
+    <button onclick="location.href='@Url.Action("ViewAppointmentsPatient","PatientMainPage", Model)'">Προβολή Ραντεβού</button>
 
 </div>

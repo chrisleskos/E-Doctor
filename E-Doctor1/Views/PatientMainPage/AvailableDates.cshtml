@@ -1,12 +1,12 @@
-﻿@model ErgasiaMVC.Models.AvailableDate
+﻿@model E_Doctor1.Models.ListModel<ErgasiaMVC.Models.AvailableDate>
 @{
     ViewBag.Title = "AvailableDates";
 }
 
 <style>
-    /* CSS for table and input (textbox) */
-    table, td, th {
+    td, th {
         border: 1px solid black;
+        padding: 20px;
     }
 
     table, tr {
@@ -22,6 +22,10 @@
         text-align: center;
     }
 </style>
+
+<div class="user-credentials">
+    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
+</div>
 
 <h2>Διαθέσιμες Ημερομηνίες</h2>
 <table>

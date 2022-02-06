@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ErgasiaMVC.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,14 +10,14 @@ namespace E_Doctor1.Controllers
     public class PatientMainPageController : Controller
     {
         // GET: PatientMainPage
-        public ActionResult Index()
+        public ActionResult Index(Patient patient)
         {
-            return View();
+            return View(patient);
         }
 
-        public ActionResult SpecialtyChoice()
+        public ActionResult SpecialtyChoice(Patient patient)
         {
-            return View();
+            return View(patient);
         }
 
         public ActionResult ViewAppointmentsPatient()
@@ -25,7 +26,7 @@ namespace E_Doctor1.Controllers
         }
 
 
-        public ActionResult AvailableDates()
+        public ActionResult AvailableDates(Patient patient)
         {
             return View();
         }

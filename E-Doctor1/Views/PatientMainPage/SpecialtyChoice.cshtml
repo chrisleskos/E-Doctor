@@ -3,15 +3,19 @@
     ViewBag.Title = "SpecialtyChoice";
 }
 
+<div class="user-credentials">
+    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
+</div>
+
 <h1>Επιλογή Ειδικότητας Ιατρού</h1>
 <p>Παρακαλώ επιλέξτε μία από της παρακάτω ειδηκότητες που σας ενδιαφέρει.</p>
 <br />
 <p>Για να προχωρήσετε στην επιλογή ώρας, ημέρας και ιατρού πρέπει να πατήσετε επάνω στο κουμπί που αναγράφεται η ειδηκότητα που σας ενδιαφέρει.</p>
 <br />
-<button type="button" onclick="location.href='@Url.Action("","")'">Παθολόγος</button>
+<button type="button" onclick="location.href='@Url.Action("AvailableDates","PatientMainPage")'">Παθολόγος</button>
 <br />
-<button type="button" onclick="location.href='@Url.Action("","")'">Οφθαλμίατρος</button>
+<button type="button" onclick="location.href='@Url.Action("AvailableDates","PatientMainPage")'">Οφθαλμίατρος</button>
 <br />
-<button type="button" onclick="location.href='@Url.Action("","")'">Ορθοπεδικός</button>
+<button type="button" onclick="location.href='@Url.Action("AvailableDates","PatientMainPage")'">Ορθοπεδικός</button>
 <br />
 

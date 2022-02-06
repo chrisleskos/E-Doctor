@@ -4,7 +4,10 @@
     ViewBag.Title = "DoctorRegister";
 }
 
-<h2>DoctorRegister</h2>
+<div class="user-credentials">
+    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
+</div>
+
 <h1>Δημιουργία Νέου Λογαριασμού Ιατρού</h1>
 
 @using (Html.BeginForm()) //Creates a POST Form
