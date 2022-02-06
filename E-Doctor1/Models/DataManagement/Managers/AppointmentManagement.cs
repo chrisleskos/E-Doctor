@@ -16,14 +16,18 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
             appointmentDao = new AppointmentDAO();
         }
 
-        public void changeAppointmentStatus(Appointment appointment)
+        public void changeAppointmentStatus(int appointment_id)
         {
-            throw new NotImplementedException();
+            appointmentDao.openConn();
+            appointmentDao.changeStatus(appointment_id);
+            appointmentDao.closeConn();
         }
 
         public void createAppointment(Appointment appointment)
         {
-            throw new NotImplementedException();
+            appointmentDao.openConn();
+            appointmentDao.createAppointment(appointment);
+            appointmentDao.closeConn();
         }
 
         public Appointment getAppointment(int appointment_id)

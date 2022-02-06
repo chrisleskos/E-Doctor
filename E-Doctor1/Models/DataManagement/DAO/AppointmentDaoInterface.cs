@@ -1,4 +1,5 @@
 ﻿using ErgasiaMVC.Models;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,13 @@ namespace E_Doctor1.Models.DataManagement.DAO
 {
     interface AppointmentDaoInterface
     {
-        Appointment getAppointment(int appointment_id);
+        NpgsqlDataReader getAppointment(int appointment_id);
         void createAppointment(Appointment appointment);
-        List<Appointment> getAppointments(Patient patient);
-        List<Appointment> getAppointments(Doctor doctor);
+        NpgsqlDataReader getAppointments(Patient patient);
+        NpgsqlDataReader getAppointments(Doctor doctor);
+        void changeStatus(int appointment_id);
         void editAppointment(Appointment appointment);
+        void closeConn();
+        void openConn();
     }
 }

@@ -76,7 +76,11 @@ namespace E_Doctor1.Controllers
             date = date.AddHours(hour);
             date = date.AddMinutes(minute);
 
+            Appointment appointment = new Appointment(date, availableDate, patient, Appointment.PENDING);
 
+            AppointmentManagement appointmentManagement = new AppointmentManagement();
+
+            appointmentManagement.createAppointment(appointment);
 
             return RedirectToAction("Index", "PatientMainPage", patient);
         }
