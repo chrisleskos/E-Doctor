@@ -21,6 +21,12 @@ namespace ErgasiaMVC.Models
             this.specialty = specialty;
         }
 
+        public Doctor(int user_id, String username,String first_name, String last_name, String email, String amka, String phone_number, int specialty)
+            : base(user_id, username, first_name, last_name, email, phone_number, amka)
+        {
+            this.specialty = specialty;
+        }
+
         public int getSpecialty()
         {
             return specialty;

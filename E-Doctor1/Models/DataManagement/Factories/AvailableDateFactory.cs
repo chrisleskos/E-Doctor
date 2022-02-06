@@ -17,16 +17,16 @@ namespace E_Doctor1.Models.DataManagement.Factories
             TimeSpan ending_time = reader.GetTimeSpan(reader.GetOrdinal("ending_time"));
             int day = reader.GetInt32(reader.GetOrdinal("day_of_week"));
 
-            Doctor doctor = new Doctor();
+            int doctor_id = reader.GetInt32(reader.GetOrdinal("id"));
+            string username = reader.GetString(reader.GetOrdinal("username"));
+            string first_name = reader.GetString(reader.GetOrdinal("first_name"));
+            string last_name = reader.GetString(reader.GetOrdinal("last_name"));
+            string email = reader.GetString(reader.GetOrdinal("email"));
+            string phone_number = reader.GetString(reader.GetOrdinal("phone_number"));
+            string amka = reader.GetString(reader.GetOrdinal("amka"));
+            int specialty = reader.GetInt32(reader.GetOrdinal("specialty"));
 
-            doctor.user_id = reader.GetInt32(reader.GetOrdinal("doctor_id"));
-            doctor.Username = reader.GetString(reader.GetOrdinal("username"));
-            doctor.first_name = reader.GetString(reader.GetOrdinal("first_name"));
-            doctor.last_name = reader.GetString(reader.GetOrdinal("last_name"));
-            doctor.email = reader.GetString(reader.GetOrdinal("email"));
-            doctor.phone_number = reader.GetString(reader.GetOrdinal("phone_number"));
-            doctor.amka = reader.GetString(reader.GetOrdinal("amka"));
-            doctor.specialty = reader.GetInt32(reader.GetOrdinal("specialty"));
+            Doctor doctor = new Doctor(doctor_id, username, first_name, last_name, email, phone_number, amka, specialty);
 
             return new AvailableDate(available_date_id, day, starting_time, ending_time, doctor);
 

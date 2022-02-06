@@ -56,6 +56,31 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
             return statement.ExecuteReader();
         }
 
+        public NpgsqlDataReader getUser(int id, int table_index)
+        {
+            String table = "";
+
+            if (table_index == ADMINISTRATORS_TABLE)
+                table = "administrators";
+            else if (table_index == DOCTORS_TABLE)
+                table = "doctors";
+            else if (table_index == PATIENTS_TABLE)
+                table = "patients";
+
+
+            String query = "SELECT * FROM user_auth as ua " +
+                    "INNER JOIN " + table + " as b " +
+                    "ON ua.user_id = b.id " +
+                    "WHERE b.id = @id";
+
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+
+            statement.Parameters.AddWithValue("id", id);
+
+            return statement.ExecuteReader();
+        }
+
         public void createAdmin(Admin admin)
         {
 

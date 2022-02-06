@@ -43,25 +43,25 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
 
         public void deleteAvailableDate(int available_date_id)
         {
-            string query = "DELETE FROM weekly_available_appointments WHERE available_date_id = @available_date_id";
+            string query = "DELETE FROM weekly_available_appointments WHERE available_appointment_id = @available_date_id";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
 
-            statement.Parameters.AddWithValue("available_date_id", available_date_id);
+            statement.Parameters.AddWithValue("available_appontment_id", available_date_id);
 
             statement.ExecuteNonQuery();
         }
 
         public void editAvailableDate(AvailableDate available_date)
         {
-            string query = "UPDATE weekly_available_appointments SET day = @day, stating_time = @starting_time, ending_time = @ending_time" +
-                "   WHERE available_date_id = @available_date_id";
+            string query = "UPDATE weekly_available_appointments SET starting_time = @starting_time, ending_time = @ending_time" +
+                " WHERE available_appointment_id = @available_date_id";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
 
-            statement.Parameters.AddWithValue("day", available_date.getDay());
             statement.Parameters.AddWithValue("starting_time", available_date.getStartingTime());
             statement.Parameters.AddWithValue("ending_time", available_date.getEndingTime());
+            statement.Parameters.AddWithValue("available_date_id", available_date.Id);
 
             statement.ExecuteNonQuery();
         }
@@ -69,7 +69,7 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
         public NpgsqlDataReader getAvailableDate(int available_date_id)
         {
             string query = "SELECT * FROM weekly_available_appointments INNER JOIN doctors ON id = doctor_id" +
-                " WHERE available_date_id = @available_date_id";
+                " WHERE available_appointment_id = @available_date_id";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
             statement.Parameters.AddWithValue("available_date_id", available_date_id);

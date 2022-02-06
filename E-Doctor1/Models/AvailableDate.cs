@@ -9,8 +9,8 @@ namespace ErgasiaMVC.Models
     {
         public int Id { get; set; }
         public int Day { get; set; }
-        public TimeSpan Starting_time { get; set; }
-        public TimeSpan Ending_time { get; set; }
+        public TimeSpan Starting_time { get; set; } = new TimeSpan();
+        public TimeSpan Ending_time { get; set; } = new TimeSpan();
         public Doctor doctor { get; set; }
 
         public AvailableDate() { }

@@ -1,0 +1,46 @@
+﻿@model ErgasiaMVC.Models.AvailableDate
+@{
+    ViewBag.Title = "Add Available Date";
+}
+
+<style>
+    input[type=text] {
+        width: 25px;
+    }
+</style>
+
+<h2>AddAvailableDate</h2>
+
+<h1>Δημιουργία Διαθέσιμου Ραντεβού</h1>
+
+@using (Html.BeginForm())
+{
+<div class="container">
+    <div>Μέρα: @Model.getDay()</div>
+    <div>Γιατρός: @Model.getDoctor().getFirstname() @Model.getDoctor().getLastname()</div>
+    <label for="uname"><b>Ώρα εκκίνησης</b></label> <br />
+    <div>
+        <input type="text" name="starting_hours"/> :
+        <input type="text" name="starting_minutes"/>
+    </div>
+    <br />
+    <label for="psw"><b>Ώρα τέλους</b></label> <br />
+    <div>
+        <input type="text" name="ending_hours"/> :
+        <input type="text" name="ending_minutes"/>
+    </div>
+
+    @Html.HiddenFor(model => model.doctor.user_id)
+    @Html.HiddenFor(model => model.doctor.first_name)
+    @Html.HiddenFor(model => model.doctor.last_name)
+    @Html.HiddenFor(model => model.doctor.Username)
+    @Html.HiddenFor(model => model.doctor.email)
+    @Html.HiddenFor(model => model.doctor.amka)
+    @Html.HiddenFor(model => model.doctor.phone_number)
+    @Html.HiddenFor(model => model.doctor.specialty)
+    <br />
+    <button type="submit">Καταχώρηση</button> <br /><br />
+
+</div>
+}
+

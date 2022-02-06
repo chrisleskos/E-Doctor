@@ -1,4 +1,4 @@
-﻿@model List<ErgasiaMVC.Models.AvailableDate>
+﻿@model E_Doctor1.Models.ListModel<ErgasiaMVC.Models.AvailableDate>
 @{
     ViewBag.Title = "AvailableDates";
 }
@@ -7,6 +7,7 @@
     td, th {
         padding: 20px;
         border: 2px solid black;
+        text-align: center;
     }
 
     th{
@@ -27,25 +28,38 @@
         <th>Παρασκευή</th>
     </tr>
     <tr>
-     @for (int i = 1; i < 6; i++)
-     {
-         bool found = false;
-         foreach (var el in Model)
-         {
-             if (el.getDay() == i)
-             {
-                 found = true;
-                 <td>@el.getStartingTime() - @el.getEndingTime() <br /> <input type="button" value="Επεξεργασία"/></td>
-             }
-         }
+    @for (int i = 1; i < 6; i++)
+    {
+        bool found = false;
+        foreach (var el in Model.Items)
+        {
+            if (el.getDay() == i)
+            {
+                found = true;
+        <td>
+            @el.Starting_time.ToString(@"hh\:mm") - @el.Ending_time.ToString(@"hh\:mm")<br />
+            @using (Html.BeginForm("EditAvailableDate", "DoctorMainPage", FormMethod.Get))
+            {
+                <input type="hidden" value="@el.Id" name="available_date_id" />
+                <input type="submit" value="Επεξεργασία" />
+            }
+        </td>
+            }
+        }
 
-        
 
-         if (!found)
-         {
-             <td><input type="button" value="Προσθήκη"/></td>
-         }
-     }
+        if (!found)
+        {
+    <td>
+        @using (Html.BeginForm("AddAvailableDate", "DoctorMainPage", FormMethod.Get))
+        {
+            <input type="hidden" value="@Model.doctor.user_id" name="doctor_id" />
+            <input type="hidden" value="@i" name="day" />
+            <input type="submit" value="Προσθήκη" />
+        }
+    </td>
+        }
+    }
 
     </tr>
 </table>

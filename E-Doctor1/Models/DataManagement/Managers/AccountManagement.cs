@@ -200,5 +200,36 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
 
             return false;
         }
+
+        public object getUser(int id, int table_index)
+        {
+            accountDao.openConn();
+            NpgsqlDataReader reader = accountDao.getUser(id, table_index);
+
+            if (!reader.Read())
+                return null;
+
+            if (table_index == AccountDAO.ADMINISTRATORS_TABLE)
+            {
+                Admin user = UserFactory.buildAdmin(reader);
+                accountDao.closeConn();
+                return user;
+            } else if (table_index == AccountDAO.DOCTORS_TABLE)
+            {
+                Doctor user = UserFactory.buildDoctor(reader);
+                accountDao.closeConn();
+                return user;
+            } else if (table_index == AccountDAO.PATIENTS_TABLE)
+            {
+                Patient user = UserFactory.buildPatient(reader);
+                accountDao.closeConn();
+                return user;
+            }
+
+            accountDao.closeConn();
+            return null;
+        }
+
+
     }
 }

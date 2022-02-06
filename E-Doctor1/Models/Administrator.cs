@@ -7,7 +7,7 @@ namespace ErgasiaMVC.Models
 {
     public class Admin : UserCred
     {
-        public int user_id { get; set; }
+        
         public String first_name { get; set; }
         public String last_name { get; set; }
         public String email { get; set; }
@@ -34,9 +34,13 @@ namespace ErgasiaMVC.Models
             this.email = email;
         }
 
-        public int getUser_id()
+        public Admin(int user_id, String username, String first_name, String last_name, String email)
+            : base(username)
         {
-            return user_id;
+            this.user_id = user_id;
+            this.first_name = first_name;
+            this.last_name = last_name;
+            this.email = email;
         }
 
         public String getFirstname()

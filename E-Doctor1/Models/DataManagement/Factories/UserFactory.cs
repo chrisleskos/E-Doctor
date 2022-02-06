@@ -32,27 +32,20 @@ namespace ErgasiaMVC.Models.DataManagement.Factories
 
         public static Doctor buildDoctor(NpgsqlDataReader dr)
         {
-            try
-            {
-                int user_id = dr.GetInt32(dr.GetOrdinal("user_id"));
-                String password = dr.GetString(dr.GetOrdinal("user_password"));
-                String salt = dr.GetString(dr.GetOrdinal("salt"));
-                String username = dr.GetString(dr.GetOrdinal("username"));
-                String first_name = dr.GetString(dr.GetOrdinal("first_name"));
-                String last_name = dr.GetString(dr.GetOrdinal("last_name"));
-                String email = dr.GetString(dr.GetOrdinal("email"));
-                String phone_number = dr.GetString(dr.GetOrdinal("phone_number"));
-                String amka = dr.GetString(dr.GetOrdinal("amka"));
-                int specialty = dr.GetInt32(dr.GetOrdinal("specialty"));
 
-                return new Doctor(user_id, username, password, salt, first_name, last_name, email, phone_number, amka, specialty);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            int user_id = dr.GetInt32(dr.GetOrdinal("user_id"));
+            String password = dr.GetString(dr.GetOrdinal("user_password"));
+            String salt = dr.GetString(dr.GetOrdinal("salt"));
+            String username = dr.GetString(dr.GetOrdinal("username"));
+            String first_name = dr.GetString(dr.GetOrdinal("first_name"));
+            String last_name = dr.GetString(dr.GetOrdinal("last_name"));
+            String email = dr.GetString(dr.GetOrdinal("email"));
+            String phone_number = dr.GetString(dr.GetOrdinal("phone_number"));
+            String amka = dr.GetString(dr.GetOrdinal("amka"));
+            int specialty = dr.GetInt32(dr.GetOrdinal("specialty"));
 
-            return null;
+            return new Doctor(user_id, username, password, salt, first_name, last_name, email, phone_number, amka, specialty);
+
         }
 
         public static Patient buildPatient(NpgsqlDataReader dr)

@@ -22,6 +22,12 @@ namespace ErgasiaMVC.Models
             this.phone_number = phone_number;
             this.amka = amka;
         }
+        public Patient(int user_id, String username, String first_name, String last_name, String email, String amka, String phone_number)
+            : base(user_id, username, first_name, last_name, email)
+        {
+            this.phone_number = phone_number;
+            this.amka = amka;
+        }
 
         public String getPhone_number()
         {

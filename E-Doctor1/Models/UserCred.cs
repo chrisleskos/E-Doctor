@@ -7,6 +7,7 @@ namespace E_Doctor1.Models
 {
     public class UserCred
     {
+        public int user_id { get; set; }
         public String Username { get; set; }
         public String Password { get; set; }
 
@@ -19,6 +20,11 @@ namespace E_Doctor1.Models
             Password = password;
         }
 
+        public UserCred(String username)
+        {
+            Username = username;
+        }
+
         public String getUsername()
         {
             return Username;
@@ -27,6 +33,11 @@ namespace E_Doctor1.Models
         public String getPassword()
         {
             return Password;
+        }
+
+        public int getUser_id()
+        {
+            return user_id;
         }
     }
 }

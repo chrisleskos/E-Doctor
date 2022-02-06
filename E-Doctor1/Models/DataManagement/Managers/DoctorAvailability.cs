@@ -51,8 +51,9 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
 
             if (reader.Read())
             {
+                AvailableDate availableDate = AvailableDateFactory.buildAvailableDate(reader);
                 doctorAvailabilityDAO.closeConn();
-                return null;
+                return availableDate;
             }
 
             doctorAvailabilityDAO.closeConn();
