@@ -31,5 +31,15 @@ namespace ErgasiaMVC.Models
         {
             return specialty;
         }
+
+        public string getSpecialtyName()
+        {
+            if (specialty == 1)
+                return "ΠΑΘΟΛΟΓΟ";
+            else if (specialty == 2)
+                return "ΟΦΘΑΛΜΙΑΤΡΟ";
+            else
+                return "ΟΡΘΟΠΕΔΙΚΟ";
+        }
     }
 }

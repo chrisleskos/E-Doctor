@@ -11,6 +11,7 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
         void deleteAvailableDate(int available_date_id);
         AvailableDate getAvailableDate(int available_date_id);
         List<AvailableDate> getAvailableDates(int doctor_id);
+        List<AvailableDate> getSpecialtyAvailableDates(int specialty);
         List<AvailableDate> getAvailableDates();
         void editAvailableDate(AvailableDate availableDate);
     }

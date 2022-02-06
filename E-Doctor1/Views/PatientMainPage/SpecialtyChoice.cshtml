@@ -1,4 +1,4 @@
-﻿
+﻿@model ErgasiaMVC.Models.Patient
 @{
     ViewBag.Title = "SpecialtyChoice";
 }
@@ -12,10 +12,25 @@
 <br />
 <p>Για να προχωρήσετε στην επιλογή ώρας, ημέρας και ιατρού πρέπει να πατήσετε επάνω στο κουμπί που αναγράφεται η ειδηκότητα που σας ενδιαφέρει.</p>
 <br />
-<button type="button" onclick="location.href='@Url.Action("AvailableDates","PatientMainPage")'">Παθολόγος</button>
+@using (Html.BeginForm("AvailableDates", "PatientMainPage"))
+{
+    <input type="hidden" value="@Model.user_id" name="patient_id" />
+    <input type="hidden" value="1" name="specialty" />
+    <button type="submit">Παθολόγος</button>
+}
 <br />
-<button type="button" onclick="location.href='@Url.Action("AvailableDates","PatientMainPage")'">Οφθαλμίατρος</button>
+@using (Html.BeginForm("AvailableDates", "PatientMainPage"))
+{
+    <input type="hidden" value="@Model.user_id" name="patient_id" />
+    <input type="hidden" value="2" name="specialty" />
+    <button type="submit">Οφθαλμίατρος</button>
+}
 <br />
-<button type="button" onclick="location.href='@Url.Action("AvailableDates","PatientMainPage")'">Ορθοπεδικός</button>
-<br />
+@using (Html.BeginForm("AvailableDates", "PatientMainPage"))
+{
+    <input type="hidden" value="@Model.user_id" name="patient_id" />
+    <input type="hidden" value="3" name="specialty" />
+    <button type="submit">Ορθοπεδικός</button>
+}
+
 

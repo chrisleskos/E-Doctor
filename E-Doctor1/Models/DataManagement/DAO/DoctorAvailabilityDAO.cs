@@ -95,5 +95,15 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
             
             return statement.ExecuteReader();
         }
+
+        public NpgsqlDataReader getSpecialtyAvailableDates(int specialty)
+        {
+            string query = "SELECT * FROM weekly_available_appointments INNER JOIN doctors ON doctor_id = id WHERE specialty = @specialty";
+
+            NpgsqlCommand statement = new NpgsqlCommand(query, connection);
+            statement.Parameters.AddWithValue("specialty", specialty);
+
+            return statement.ExecuteReader();
+        }
     }
 }

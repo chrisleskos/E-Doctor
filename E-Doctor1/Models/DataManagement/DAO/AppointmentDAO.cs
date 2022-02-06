@@ -1,27 +1,29 @@
-﻿using E_Doctor1.Models.DataManagement.DAO;
+﻿using ErgasiaMVC.Models;
+using ErgasiaMVC.Models.DataManagement.Utilities;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Web;
 
-namespace ErgasiaMVC.Models.DataManagement.Managers
+namespace E_Doctor1.Models.DataManagement.DAO
 {
-    public class AppointmentManagement : IAppointmentManagement
+    public class AppointmentDAO : AppointmentDaoInterface
     {
 
-        AppointmentDAO appointmentDao;
+        private NpgsqlConnection connection;
 
-        public AppointmentManagement()
+        public AppointmentDAO()
         {
-            appointmentDao = new AppointmentDAO();
+            connection = DatabaseUtil.getConnection("appointments_management");
         }
 
-        public void changeAppointmentStatus(Appointment appointment)
+        public void createAppointment(Appointment appointment)
         {
             throw new NotImplementedException();
         }
 
-        public void createAppointment(Appointment appointment)
+        public void editAppointment(Appointment appointment)
         {
             throw new NotImplementedException();
         }

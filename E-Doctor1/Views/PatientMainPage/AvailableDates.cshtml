@@ -1,59 +1,257 @@
 ﻿@model E_Doctor1.Models.ListModel<ErgasiaMVC.Models.AvailableDate>
+@using System.Globalization
 @{
     ViewBag.Title = "AvailableDates";
 }
 
 <style>
-    td, th {
+    .wrapper {
+        display: flex;
+        text-align:center;
+    }
+
+    .day {
+        display: flex;
+        flex-direction: column;
+        width: 20%;
+    }
+
+    .appointments div{
         border: 1px solid black;
-        padding: 20px;
+        background-color: lightblue;
+        cursor: pointer;
     }
 
-    table, tr {
-        border-collapse: collapse;
+        .appointments div:hover {
+            font-weight: bolder;
+        }
+
+    .day .header {
+        border: 1px solid black;
+        background-color: lightgrey;
     }
 
-    input[type=text] {
-        width: 100%;
-    }
-
-    th {
-        height: 50px;
-        text-align: center;
-    }
 </style>
 
 <div class="user-credentials">
-    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
+    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index", "Home")'" />
 </div>
 
-<h2>Διαθέσιμες Ημερομηνίες</h2>
-<table>
-    <thead>
-        <tr>
-            <th>
-                ΔΕΥΤΕΡΑ
-            </th>
-            <th>
-                ΤΡΙΤΗ
-            </th>
-            <th>
-                ΤΕΤΑΡΤΗ
-            </th>
-            <th>
-                ΠΕΜΠΤΗ
-            </th>
-            <th>
-                ΠΑΡΑΣΚΕΥΗ
-            </th>
-        </tr>
-    </thead>
-</table>
+<h2>Διαθέσιμες Ημερομηνίες Για @Model.data</h2> <br />
 
-<!-- Κουμπιά/action με ονομα γιατρου και ωρες διαθεσιμότητας
-    πχ 
-    Δευτερα 24/01/2022         ||  Τρίτη
-    ----------------------------------------------------
-    Γεωργιου 09:00-18:00       ||
-    Παπαδοπουλος 12:00-20:00   ||
-    -->
+<div>
+    @{
+        /* 
+         * Find the date of the first Monday (if today is Sunday or Saturday, nearest Monday is the next week's one) 
+         * and calculate from there 
+         */
+
+        int todaysDay = (int)DateTime.Now.DayOfWeek;
+        DateTime today = DateTime.Now;
+        DateTime mondaysDate;
+
+        if (todaysDay == 6) {
+            mondaysDate = today.AddDays(2);
+        }
+        else {
+            mondaysDate = today.AddDays(-todaysDay + 1);
+        }
+
+    }
+    
+    <button type="button" style="visibility: hidden;" id="prevButton" onclick="previousWeek()">Προηγούμενη Εβδομάδα</button>
+    <button type="button" id="nextButton" onclick="nextWeek()">Επόμενη Εβδομάδα</button>
+</div>
+
+<div class="wrapper">
+
+    <div class="day">
+        <div class="date" id="mondayHeaderDate">
+            @mondaysDate.ToString("dd/M/yyyy", CultureInfo.InvariantCulture)
+        </div>
+        <div class="header">
+            Δευτέρα
+        </div>
+        <div class="appointments">
+            @foreach (var el in Model.Items)
+            {
+                if (el.Day == 1)
+                {
+                    using (Html.BeginForm("AvailableTime", "PatientMainPage", FormMethod.Get))
+                    {
+                    <div onclick="submitForm(this, document.getElementById('mondayHeaderDate'))">
+                        @el.doctor.first_name @el.doctor.last_name <br />
+                        @el.Starting_time.ToString(@"hh\:mm") - @el.Ending_time.ToString(@"hh\:mm")
+                        <input type="hidden" value="@el.Id" name="available_date_id" />
+                        <input type="hidden" value="@Model.patient.user_id" name="patient_id" />
+                        <input type="hidden" name="date" />
+                    </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="date" id="tuesdayHeaderDate">
+            @mondaysDate.AddDays(1).ToString("dd/M/yyyy", CultureInfo.InvariantCulture)
+        </div>
+        <div class="header">
+            Τρίτη
+        </div>
+        <div class="appointments">
+            @foreach (var el in Model.Items)
+            {
+                if (el.Day == 2)
+                {
+                    using (Html.BeginForm("AvailableTime", "PatientMainPage", FormMethod.Get))
+                    {
+                        <div onclick="submitForm(this, document.getElementById('tuesdayHeaderDate'))">
+                            @el.doctor.first_name @el.doctor.last_name <br />
+                            @el.Starting_time.ToString(@"hh\:mm") - @el.Ending_time.ToString(@"hh\:mm")
+                            <input type="hidden" value="@el.Id" name="available_date_id" />
+                            <input type="hidden" value="@Model.patient.user_id" name="patient_id" />
+                            <input type="hidden" name="date" />
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="date" id="wednesdayHeaderDate">
+            @mondaysDate.AddDays(2).ToString("dd/M/yyyy", CultureInfo.InvariantCulture)
+        </div>
+        <div class="header">
+            Τετάρτη
+        </div>
+        <div class="appointments">
+            @foreach (var el in Model.Items)
+            {
+                if (el.Day == 3)
+                {
+                    using (Html.BeginForm("AvailableTime", "PatientMainPage", FormMethod.Get))
+                    {
+                        <div onclick="submitForm(this, document.getElementById('wednesdayHeaderDate'))">
+                            @el.doctor.first_name @el.doctor.last_name <br />
+                            @el.Starting_time.ToString(@"hh\:mm") - @el.Ending_time.ToString(@"hh\:mm")
+                            <input type="hidden" value="@el.Id" name="available_date_id" />
+                            <input type="hidden" value="@Model.patient.user_id" name="patient_id" />
+                            <input type="hidden" name="date" />
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="date" id="thursdayHeaderDate">
+            @mondaysDate.AddDays(3).ToString("dd/M/yyyy", CultureInfo.InvariantCulture)
+        </div>
+        <div class="header">
+            Πέμπτη
+        </div>
+        <div class="appointments">
+            @foreach (var el in Model.Items)
+            {
+                if (el.Day == 4)
+                {
+                    using (Html.BeginForm("AvailableTime", "PatientMainPage", FormMethod.Get))
+                    {
+                        <div onclick="submitForm(this, document.getElementById('thursdayHeaderDate'))">
+                            @el.doctor.first_name @el.doctor.last_name <br />
+                            @el.Starting_time.ToString(@"hh\:mm") - @el.Ending_time.ToString(@"hh\:mm")
+                            <input type="hidden" value="@el.Id" name="available_date_id" />
+                            <input type="hidden" value="@Model.patient.user_id" name="patient_id" />
+                            <input type="hidden" name="date" />
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+    <div class="day">
+        <div class="date" id="fridayHeaderDate">
+            @mondaysDate.AddDays(4).ToString("dd/M/yyyy", CultureInfo.InvariantCulture)
+        </div>
+        <div class="header" >
+            Παρασκευή
+        </div>
+        <div class="appointments">
+            @foreach (var el in Model.Items)
+            {
+                if (el.Day == 5)
+                {
+                    using (Html.BeginForm("AvailableTime", "PatientMainPage", FormMethod.Get))
+                    {
+                        <div onclick="submitForm(this, document.getElementById('fridayHeaderDate'))">
+                            @el.doctor.first_name @el.doctor.last_name <br />
+                            @el.Starting_time.ToString(@"hh\:mm") - @el.Ending_time.ToString(@"hh\:mm")
+                            <input type="hidden" value="@el.Id" name="available_date_id" />
+                            <input type="hidden" value="@Model.patient.user_id" name="patient_id" />
+                            <input type="hidden" name="date" />
+                        </div>
+                    }
+                }
+            }
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+    availableWeekDays(@todaysDay)
+    mondaysDate = new Date('@mondaysDate.ToString("MM/dd/yyyy", CultureInfo.InvariantCulture)');
+    weekMultiplier = 0;
+    previousButton = document.getElementById("prevButton");
+
+    function nextWeek() {
+        dateHeaders = document.getElementsByClassName("date");
+        weekMultiplier++;
+        previousButton.style.visibility = "visible";
+
+        for (i = 0; i < 5; i++) {
+            temp = new Date(mondaysDate);
+            d = 7 * weekMultiplier + i
+            temp.setDate(temp.getDate() + d);
+            dateHeaders[i].innerText = temp.getDate() + '/' + (temp.getMonth()+1) + '/' + temp.getFullYear();
+        }
+    }
+
+    function previousWeek() {
+        dateHeaders = document.getElementsByClassName("date");
+        weekMultiplier--;
+        if (weekMultiplier == 0) {
+            previousButton.style.visibility = "hidden";
+            availableWeekDays(@todaysDay)
+        }
+
+        for (i = 0; i < 5; i++) {
+            temp = new Date(mondaysDate);
+            d = 7 * weekMultiplier + i
+            temp.setDate(temp.getDate() + d);
+            dateHeaders[i].innerText = temp.getDate() + '/' + temp.getMonth() + '/' + temp.getFullYear();
+        }
+    }
+
+    function availableWeekDays(day) {
+        days = document.getElementsByClassName("day");
+
+        for (i = 0; i < 5; i++) {
+            if (i + 1 < day && day != 6)
+                days[i].style.visibility = "hidden";
+            else
+                days[i].style.visibility = "visible";
+        }
+    }
+
+    function submitForm(el, dateHeaderElement) {
+        dateHidden = el.getElementsByTagName("input")[2];
+        dateHidden.value = dateHeaderElement.innerText;
+        el.parentNode.submit();
+    }
+</script>

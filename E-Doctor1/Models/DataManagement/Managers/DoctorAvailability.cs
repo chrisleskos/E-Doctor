@@ -78,6 +78,24 @@ namespace ErgasiaMVC.Models.DataManagement.Managers
             return dates;
         }
 
+        public List<AvailableDate> getSpecialtyAvailableDates(int specialty)
+        {
+            List<AvailableDate> dates = new List<AvailableDate>();
+
+            doctorAvailabilityDAO.openConn();
+            NpgsqlDataReader reader = doctorAvailabilityDAO.getSpecialtyAvailableDates(specialty);
+            
+            while (reader.Read())
+            {
+                AvailableDate availableDate = AvailableDateFactory.buildAvailableDate(reader);
+                dates.Add(availableDate);
+            }
+
+            doctorAvailabilityDAO.closeConn();
+
+            return dates;
+        }
+
         public List<AvailableDate> getAvailableDates()
         {
             throw new NotImplementedException();

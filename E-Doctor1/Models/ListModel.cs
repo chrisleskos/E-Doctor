@@ -12,6 +12,8 @@ namespace E_Doctor1.Models
         public Patient patient { get; set; }
         public List<T> Items { get; set; }
 
+        public string data { get; set; }
+
         public ListModel(List<T> list, Doctor user)
         {
             Items = list;

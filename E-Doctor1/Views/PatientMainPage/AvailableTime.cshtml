@@ -1,18 +1,101 @@
 ﻿@model  ErgasiaMVC.Models.Appointment
-
-
+@using System.Globalization
 @{
     ViewBag.Title = "AvailableTime";
 }
 
+<style>
+    .time {
+        width: 10%;
+        padding: 20px 0;
+        text-align: center;
+        background-color: Highlight;
+        display: inline-block;
+        border: white solid 2px;
+        cursor: pointer;
+        color: white;
+    }
+
+    .time:not(.selected):hover {
+        font-weight: bolder;
+        font-size: 1.5rem;
+    }
+
+    .selected {
+        background-color: green;
+        font-size: 1.5rem;
+    }
+
+    .wrapper {
+        padding: 15px;
+    }
+</style>
+
 <div class="user-credentials">
-    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
+    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index", "Home")'" />
 </div>
 
-<h2>Διαθέσιμες Ώρες</h2>  
+<h2>Διαθέσιμες Ώρες</h2>
 <p>Παρακαλώ επιλέξτε μία απο τις παρακάτω διαθέσιμες ώρες.</p>
-<!--Πινακας καθετος με κουμπιά που περιέχουν τις ώρες με διαθεσιμότητα 
+
+@Model.availableDate.doctor.first_name @Model.availableDate.doctor.last_name
+<br /> <b>@Model.scheduled_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)</b>
+<br />
+@Model.availableDate.Starting_time.ToString(@"hh\:mm") - @Model.availableDate.Ending_time.ToString(@"hh\:mm")
+<br />
+
+<div class="wrapper">
+@{
+    TimeSpan tmp = Model.availableDate.Starting_time;
+    while (true)
+    {
+        <div class="time" onclick = "selectTime(this)" hour="@tmp.Hours" minute="@tmp.Minutes">
+            @tmp.ToString(@"hh\:mm")
+        </div>
+        tmp = tmp.Add(new TimeSpan(0, 30, 0)); //Add half an hour
+
+
+        if(TimeSpan.Compare(tmp, Model.availableDate.Ending_time) > 0)
+        {
+           break;
+        }
+    }
+}
+</div>
+
+@using (Html.BeginForm("AddAppointment", "PatientMainPage"))
+{
+    <input type="hidden" value="@Model.availableDate.Id" name="available_date_id" />
+    <input type="hidden" value="@Model.patient.user_id" name="patient_id" />
+    <input type="hidden" value="@Model.scheduled_date.ToString("dd/MM/yyyy", CultureInfo.InvariantCulture)" name="scheduled_date" />
+    <input type="hidden" name="hour" />
+    <input type="hidden" name="minute" />
+
+    <input type="submit" style="visibility: hidden" id="sbmt" value="Κλείστε Ραντεβού"/>
+}
+
+<script>
+    timeButtons = document.getElementsByClassName("time");
+    submitButton = document.getElementById("sbmt");
+    var selectedTime;
+
+    function selectTime(el) {
+
+        if (selectedTime != null)
+            selectedTime.classList.remove("selected");
+
+        selectedTime = el;
+        selectedTime.classList.add("selected");
+
+        hourHidden = document.getElementsByName("hour")[0];
+        minuteHidden = document.getElementsByName("minute")[0];
+
+        hourHidden.value = selectedTime.getAttribute("hour");
+        minuteHidden.value = selectedTime.getAttribute("minute");
+
+        submitButton.style.visibility = "visible";
+    }
+
+</script>
+<!--Πινακας καθετος με κουμπιά που περιέχουν τις ώρες με διαθεσιμότητα
     πχ 10:00-10:30|| 10:30-11:00 κλπ κλπ-->
-
-
-
