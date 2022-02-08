@@ -50,26 +50,19 @@ namespace ErgasiaMVC.Models.DataManagement.Factories
 
         public static Patient buildPatient(NpgsqlDataReader dr)
         {
-            try
-            {
-                int user_id = dr.GetInt32(dr.GetOrdinal("user_id"));
-                String password = dr.GetString(dr.GetOrdinal("user_password"));
-                String salt = dr.GetString(dr.GetOrdinal("salt"));
-                String username = dr.GetString(dr.GetOrdinal("username"));
-                String first_name = dr.GetString(dr.GetOrdinal("first_name"));
-                String last_name = dr.GetString(dr.GetOrdinal("last_name"));
-                String email = dr.GetString(dr.GetOrdinal("email"));
-                String phone_number = dr.GetString(dr.GetOrdinal("phone_number"));
-                String amka = dr.GetString(dr.GetOrdinal("amka"));
 
-                return new Patient(user_id, username, password, salt, first_name, last_name, email, phone_number, amka);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            int user_id = dr.GetInt32(dr.GetOrdinal("id"));
+            String password = dr.GetString(dr.GetOrdinal("user_password"));
+            String salt = dr.GetString(dr.GetOrdinal("salt"));
+            String username = dr.GetString(dr.GetOrdinal("username"));
+            String first_name = dr.GetString(dr.GetOrdinal("first_name"));
+            String last_name = dr.GetString(dr.GetOrdinal("last_name"));
+            String email = dr.GetString(dr.GetOrdinal("email"));
+            String phone_number = dr.GetString(dr.GetOrdinal("phone_number"));
+            String amka = dr.GetString(dr.GetOrdinal("amka"));
 
-            return null;
+            return new Patient(user_id, username, password, salt, first_name, last_name, email, phone_number, amka);
+
         }
     }
 }

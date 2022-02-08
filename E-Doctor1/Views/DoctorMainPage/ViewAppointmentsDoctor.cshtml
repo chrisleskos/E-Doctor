@@ -39,7 +39,7 @@
                 }
                 else
                 {
-                    using (Html.BeginForm("CancelAppointment", "PatientMainPage"))
+                    using (Html.BeginForm("CancelAppointment", "DoctorMainPage"))
                     {
                         <input type="hidden" name="appointment_id" value="@appointment.appointment_id" />
                         <span> <button type="submit">Ακύρωση</button> (Αναμένεται) </span>

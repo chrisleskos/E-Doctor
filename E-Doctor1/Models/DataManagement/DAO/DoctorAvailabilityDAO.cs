@@ -43,7 +43,7 @@ namespace ErgasiaMVC.Models.DataManagement.DAO
 
         public void deleteAvailableDate(int available_date_id)
         {
-            string query = "DELETE FROM weekly_available_appointments WHERE available_appointment_id = @available_date_id";
+            string query = "DELETE FROM weekly_available_appointments WHERE available_appointment_id = @available_appointment_id";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
 

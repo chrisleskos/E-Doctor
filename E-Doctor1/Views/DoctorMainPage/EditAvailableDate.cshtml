@@ -42,7 +42,7 @@
     @Html.HiddenFor(model => model.doctor.phone_number)
     @Html.HiddenFor(model => model.doctor.specialty)
     <br />
-    <button type="submit">Αποθήκευση</button> <button type="button" onclick="location.href='@Url.Action("DeleteAvailableDate","DoctorMainPage", new { available_date_id = Model.Id }))'">Διαγραφή</button><br /><br />
+    <button type="submit">Αποθήκευση</button> <button type="button" onclick="location.href='@Url.Action("DeleteAvailableDate","DoctorMainPage", new { available_date_id = Model.Id })'">Διαγραφή</button><br /><br />
 
 </div>
 }

@@ -61,7 +61,7 @@ namespace E_Doctor1.Controllers
                 return Content(e.Message);
             }
 
-            return RedirectToAction("DoctorRegister", "AdminMainPage");
+            return RedirectToAction("Index", "AdminMainPage");
         }
 
     }

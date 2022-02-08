@@ -50,7 +50,7 @@ namespace E_Doctor1.Models.DataManagement.DAO
         public NpgsqlDataReader getAppointment(int appointment_id)
         {
             string query = "Select * FROM appointments as a INNER JOIN weekly_available_appointments as waa ON waa.available_appointment_id = a.available_appointment_id INNER JOIN doctors as d ON d.id = doctor_id INNER JOIN patients as p ON patient_id = p.id " +
-                " WHERE appointment_id = @id";
+                " WHERE appointment_id = @id ";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
             statement.Parameters.AddWithValue("id", appointment_id);
@@ -61,7 +61,7 @@ namespace E_Doctor1.Models.DataManagement.DAO
         public NpgsqlDataReader getAppointments(Patient patient)
         {
             string query = "SELECT * FROM appointments as a INNER JOIN weekly_available_appointments as waa ON waa.available_appointment_id = a.available_appointment_id INNER JOIN doctors as d ON d.id = doctor_id INNER JOIN patients as p ON patient_id = p.id" +
-                " WHERE patient_id = @patient_id";
+                " WHERE patient_id = @patient_id ORDER BY scheduled_date DESC";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
             statement.Parameters.AddWithValue("patient_id", patient.user_id);
@@ -72,7 +72,7 @@ namespace E_Doctor1.Models.DataManagement.DAO
         public NpgsqlDataReader getAppointments(Doctor doctor)
         {
             string query = "SELECT * FROM appointments as a INNER JOIN weekly_available_appointments as waa ON waa.available_appointment_id = a.available_appointment_id INNER JOIN patients as p ON patient_id = p.id INNER JOIN doctors as d ON d.id = doctor_id " +
-                " WHERE doctor_id = @doctor_id AND DATE(scheduled_date) >= CURRENT_DATE ";
+                " WHERE doctor_id = @doctor_id AND DATE(scheduled_date) >= CURRENT_DATE ORDER BY scheduled_date";
 
             NpgsqlCommand statement = new NpgsqlCommand(query, connection);
             statement.Parameters.AddWithValue("doctor_id", doctor.user_id);

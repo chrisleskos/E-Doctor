@@ -88,5 +88,17 @@ namespace E_Doctor1.Controllers
 
             return View(listModel);
         }
+
+        [HttpPost]
+        public ActionResult CancelAppointment(int appointment_id)
+        {
+            AppointmentManagement appointmentManager = new AppointmentManagement();
+
+            Appointment appointment = appointmentManager.getAppointment(appointment_id);
+
+            appointmentManager.changeAppointmentStatus(appointment_id);
+
+            return RedirectToAction("ViewAppointmentsDoctor", "DoctorMainPage", appointment.availableDate.doctor);
+        }
     }
 }
