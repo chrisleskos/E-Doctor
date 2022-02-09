@@ -1,50 +1,106 @@
 ﻿@model ErgasiaMVC.Models.Patient
 @{
     ViewBag.Title = "Register";
+    Layout = null;
 }
 
-<h1>Δημιουργία Νέου Λογαριασμού</h1>
+<!DOCTYPE HTML>
 
-@using (Html.BeginForm()) //Creates a POST Form
-{
+<html>
+<body>
+
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: auto;
+
+        }
+
+        h1 {
+            border-bottom: 1px solid black;
+            width: 100%;
+            padding-left: 120px;
+        }
+
+        form {
+            display: inline-block;
+            padding: 30px 70px;
+            border-radius: 10px;
+            border-bottom: solid black 1px;
+            border-top: solid black 1px;
+        }
+
+            form input[type=text], input[type=password] {
+                font-size: 1.2rem;
+                border-radius: 5px;
+            }
+
+            button {
+                border-radius: 10px;
+                font-size: 1.3rem;
+                background-color: black;
+                color: white;
+                cursor: pointer;
+            }
+
+            button:hover {
+                color: lightgrey;
+            }
 
 
-<div class="container">
-    <label for="uname"><b>Username</b></label> <br />
-    <div>@Html.TextBoxFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })</div>
+    </style>
 
-    <label for="psw"><b>Κωδικός</b></label><br />
+    <h1>Δημιουργία Νέου Λογαριασμού</h1>
 
-    <div>@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</div>
+    @using (Html.BeginForm()) //Creates a POST Form
+    {
 
-    <label for="rpsw"><b>Επαναλάβετε τον Κωδικό</b></label><br />
+    <div class="container">
+        <label for="uname"><b>Username</b></label> <br />
+        <div>@Html.TextBoxFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <br />
+        <label for="psw"><b>Κωδικός</b></label><br />
 
-    <div><input type="password" /></div>
+        <div>@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</div>
 
-    <label for="fn"><b>Όνομα</b></label><br />
+        <br />
+        <label for="rpsw"><b>Επαναλάβετε τον Κωδικό</b></label><br />
 
-    <div>@Html.TextBoxFor(model => model.first_name, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <div><input type="password" /></div>
 
-    <label for="ln"><b>Επώνυμο</b></label><br />
+        <br />
+        <label for="fn"><b>Όνομα</b></label><br />
 
-    <div>@Html.TextBoxFor(model => model.last_name, new { htmlAttributes = new { @class = "form-control" } });</div>
+        <div>@Html.TextBoxFor(model => model.first_name, new { htmlAttributes = new { @class = "form-control" } })</div>
 
-    <label for="email"><b>Email</b></label><br />
+        <br />
+        <label for="ln"><b>Επώνυμο</b></label><br />
 
-    <div>@Html.TextBoxFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <div>@Html.TextBoxFor(model => model.last_name, new { htmlAttributes = new { @class = "form-control" } })</div>
 
-    <label for="pn"><b>Τηλέφωνο</b></label><br />
+        <br />
+        <label for="email"><b>Email</b></label><br />
 
-    <div>@Html.TextBoxFor(model => model.phone_number, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <div>@Html.TextBoxFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })</div>
 
-    <label for="amka"><b>ΑΜΚΑ</b></label><br />
+        <br />
+        <label for="pn"><b>Τηλέφωνο</b></label><br />
 
-    <div>@Html.TextBoxFor(model => model.amka, new { htmlAttributes = new { @class = "form-control" } })</div>
+        <div>@Html.TextBoxFor(model => model.phone_number, new { htmlAttributes = new { @class = "form-control" } })</div>
 
+        <br />
+        <label for="amka"><b>ΑΜΚΑ</b></label><br />
 
-    <button type="submit">Εγγραφή</button><br /><br />
+        <div>@Html.TextBoxFor(model => model.amka, new { htmlAttributes = new { @class = "form-control" } })</div>
 
-</div>
-}
-<button onclick="location.href='@Url.Action("Index", "Home")'">Σύνδεση</button>
+        <br />
+        <button type="submit">Εγγραφή</button><br /><br />
 
+    </div>
+    }
+    <br />
+    <button onclick="location.href='@Url.Action("Index", "Home")'">Έχω Λογαριασμό</button>
+</body>
+</html>

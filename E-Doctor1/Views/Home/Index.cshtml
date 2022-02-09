@@ -2,34 +2,81 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = null;
 }
+<!DOCTYPE HTML>
 
-@using (Html.BeginForm()) //Creates a POST Form
-{
+<html>
+<body>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: auto;
+            justify-content:space-between;
+            height: 70vh;
+        }
 
-    <div class="text-center">
-        <h1 class="display-4">Καλώς ήρθατε στην σελίδα E-Doctor.</h1>
-        <p>Θέλετε να κλείσετε ένα ραντεβού; </p>
-        <p>Συνδεθείτε ή δημιουργήστε έναν λογαριασμό.</p>
+        h1 {
+            border-bottom: 1px solid black;
+            width: 100%;
+            padding-left: 120px;
+        }
 
-    </div>
+        form {
+            display: inline-block;
+            padding: 30px 70px;
+            border-radius: 10px;
+            border-bottom: solid black 1px;
+            border-top: solid black 1px;
+        }
+
+            form input[type=text], input[type=password] {
+                font-size: 1.2rem;
+                border-radius: 5px;
+            }
+
+        button {
+            border-radius: 10px;
+            font-size: 1.3rem;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+            button:hover {
+                color: lightgrey;
+            }
+    </style>
 
 
-    <div class="container">
-        <label for="uname"><b>Username</b></label> <br />
-        <div>@Html.TextBoxFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })</div>
+    <h1 class="display-4">Καλώς ήρθατε στην σελίδα E-Doctor.</h1>
 
-        <br />
 
-        <label for="psw"><b>Password</b></label><br />
-
-        <div>@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</div>
+    @using (Html.BeginForm()) //Creates a POST Form
+    {
 
 
 
-        <button type="submit">Σύνδεση</button><br /><br />
 
-    </div>
-}
+        <div class="container">
+            <label for="uname"><b>Username</b></label> <br />
+            <div>@Html.TextBoxFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+            <br />
+
+            <label for="psw"><b>Password</b></label><br />
+
+            <div>@Html.PasswordFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })</div>
+
+            <br /><br />
+
+            <button type="submit">Σύνδεση</button><br /><br />
+
+        </div>
+    }
     <button onclick="location.href='@Url.Action("Register","Home")'">Εγγραφή</button>
     <br />
+</body>
+</html>

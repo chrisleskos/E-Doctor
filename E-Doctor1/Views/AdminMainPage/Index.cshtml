@@ -3,16 +3,38 @@
     ViewBag.Title = "Index";
 }
 
-<div class="user-credentials">
-    <b>@Model.Username</b><br />
-    @Model.first_name @Model.last_name <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'"/>
-</div>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        justify-content: space-between;
+    }
 
+    h2 {
+        border-bottom: 1px solid black;
+        width: 100%;
+        padding-left: 120px;
+    }
+
+    button {
+        border-radius: 10px;
+        font-size: 2.5rem;
+        background-color: black;
+        color: white;
+        cursor: pointer;
+    }
+
+        button:hover {
+            color: lightgrey;
+        }
+</style>
 <div>
      <h1>Kεντρικό Μενού Διαχειριστή.</h1>
         <p>Παρακαλώ επιλέξτε μία από της παρακάτω ενέργειες για να συνεχίσετε.</p><br />
 
-        <button onclick="location.href='@Url.Action("DoctorRegister","AdminMainPage")'">Προσθήκη Ιατρού</button><br />
+        <button onclick="location.href='@Url.Action("DoctorRegister","AdminMainPage")'">Προσθήκη Ιατρού</button><br /> <br />
         <button onclick="location.href='@Url.Action("PatientRegister","AdminMainPage")'">Προσθήκη Ασθενή</button><br />
 
     </div>

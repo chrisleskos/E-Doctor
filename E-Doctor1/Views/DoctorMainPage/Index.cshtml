@@ -1,18 +1,43 @@
 ﻿@model ErgasiaMVC.Models.Doctor
 @{
     ViewBag.Title = "Index";
+    ViewBag.Controller = "DoctorMainPage";
 }
 
-<div class="user-credentials">
-    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
-</div>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: auto;
+        justify-content: space-between;
+    }
+
+    h2 {
+        border-bottom: 1px solid black;
+        width: 100%;
+        padding-left: 120px;
+    }
+
+    button {
+        border-radius: 10px;
+        font-size: 2.5rem;
+        background-color: black;
+        color: white;
+        cursor: pointer;
+    }
+
+        button:hover {
+            color: lightgrey;
+        }
+</style>
 
 <div class="text-center">
     <h1 class="display-4">Καλώς ήρθατε Ιατρέ @Model.first_name στην σελίδα E-Doctor.</h1>
     <p>Παρακαλώ επιλέξτε μια από τις παρακάτω ενέργειες.</p>
- 
+ <br /><br />
 
-    <button onclick="location.href='@Url.Action("AvailableDates","DoctorMainPage", @Model)'">Καταχώρηση Διαθεσιμότητας</button>
+    <button onclick="location.href='@Url.Action("AvailableDates","DoctorMainPage", @Model)'">Καταχώρηση Διαθεσιμότητας</button><br /><br />
     <button onclick="location.href='@Url.Action("ViewAppointmentsDoctor","DoctorMainPage", @Model)'">Προβολή Ραντεβού</button>
 
 </div>

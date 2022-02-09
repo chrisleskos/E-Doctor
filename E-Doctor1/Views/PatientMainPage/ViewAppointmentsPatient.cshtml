@@ -3,11 +3,9 @@
 @using ErgasiaMVC.Models
 @{
     ViewBag.Title = "ViewAppointmentsPatient";
+    ViewBag.Controller = "PatientMainPage";
 }
 
-<div class="user-credentials">
-    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index","Home")'" />
-</div>
 
 <h2>Προβολή Ραντεβού</h2>
 
@@ -21,7 +19,7 @@
             <th scope="col">Κατάσταση</th>
         </tr>
     </thead>
-    @foreach(var appointment in Model.Items)
+    @foreach (var appointment in Model.Items)
     {
         <tr>
             <td>
@@ -39,10 +37,10 @@
             <td>
                 @if(appointment.status == Appointment.CANCELLED)
                 {
-                    <span>Ακυρώθηκε</span>
+                    <span style="color: red;">Ακυρώθηκε</span>
                 } else if (DateTime.Compare(appointment.scheduled_date, DateTime.Now) < 0)
                 {
-                    <span>Ολοκληρώθηκε</span>
+                    <span style="color: green;">Ολοκληρώθηκε</span>
                 } else
                 {
                         using (Html.BeginForm("CancelAppointment", "PatientMainPage")) {

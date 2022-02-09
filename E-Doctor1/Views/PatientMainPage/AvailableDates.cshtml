@@ -2,6 +2,7 @@
 @using System.Globalization
 @{
     ViewBag.Title = "AvailableDates";
+    ViewBag.Controller = "PatientMainPage";
 }
 
 <style>
@@ -33,9 +34,6 @@
 
 </style>
 
-<div class="user-credentials">
-    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index", "Home")'" />
-</div>
 
 <h2>Διαθέσιμες Ημερομηνίες Για @Model.data</h2> <br />
 
@@ -211,6 +209,7 @@
 
     function nextWeek() {
         dateHeaders = document.getElementsByClassName("date");
+        availableWeekDays(0)
         weekMultiplier++;
         previousButton.style.visibility = "visible";
 
@@ -234,7 +233,7 @@
             temp = new Date(mondaysDate);
             d = 7 * weekMultiplier + i
             temp.setDate(temp.getDate() + d);
-            dateHeaders[i].innerText = temp.getDate() + '/' + temp.getMonth() + '/' + temp.getFullYear();
+            dateHeaders[i].innerText = temp.getDate() + '/' + (temp.getMonth()+1) + '/' + temp.getFullYear();
         }
     }
 

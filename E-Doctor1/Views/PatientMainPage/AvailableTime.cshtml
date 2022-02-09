@@ -2,6 +2,7 @@
 @using System.Globalization
 @{
     ViewBag.Title = "AvailableTime";
+    ViewBag.Controller = "PatientMainPage";
 }
 
 <style>
@@ -31,9 +32,6 @@
     }
 </style>
 
-<div class="user-credentials">
-    <input type="button" value="Αποσύνδεση" onclick="location.href='@Url.Action("Index", "Home")'" />
-</div>
 
 <h2>Διαθέσιμες Ώρες</h2>
 <p>Παρακαλώ επιλέξτε μία απο τις παρακάτω διαθέσιμες ώρες.</p>
